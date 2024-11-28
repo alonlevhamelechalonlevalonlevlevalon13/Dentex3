@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#123564"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="9999999"
+        android:paddingBottom="80dp"
+        app:srcCompat="@drawable/applogo" />
+
+    <EditText
+        android:id="@+id/ETE2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="כתובת אימייל"
+        android:textColor="#8DEEFd"
+        android:textColorHint="#8DEEFD" />
+
+    <EditText
+        android:id="@+id/ETP3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="right"
+        android:hint="סיסמה"
+        android:inputType="textPassword"
+        android:textColor="#8deefd"
+        android:textColorHint="#8DEEFD" />
+
+    <EditText
+        android:id="@+id/ETP4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="right"
+        android:hint="אשר סיסמה"
+        android:inputType="textPassword"
+        android:textColor="#8deefd"
+        android:textColorHint="#8DEEFD" />
+
+    <EditText
+        android:id="@+id/ETN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="right"
+        android:hint="שם פרטי"
+        android:inputType="textPassword"
+        android:textColor="#8deefd"
+        android:textColorHint="#8DEEFD" />
+
+    <TextView
+        android:id="@+id/tvWarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*שימו ❤ שאין אפשרות לשנות את הנתונים האלה בעתיד"
+        android:textColor="#8DEEFD" />
+
+    <Button
+        android:id="@+id/btnS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="#8DEEFD"
+        android:text="צור משתמש כמטופל"
+        android:textColor="#123564"
+        android:textColorLink="#8DEEFD"
+        android:textSize="24sp"
+        app:strokeColor="#8DEEFD" />
+</LinearLayout>

@@ -1,0 +1,23 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Dentex" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#8DEEFD</item>
+    </style>
+
+    <style name="Theme.Dentex" parent="Base.Theme.Dentex" />
+    <style name="Theme.App" parent="Theme.MaterialComponents">
+        ...
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">#8DEEFD</item>
+        <item name="colorOnPrimary">#2F4F54</item>
+        <item name="android:colorBackground">#8DEEFD</item>
+    </style>
+
+</resources>

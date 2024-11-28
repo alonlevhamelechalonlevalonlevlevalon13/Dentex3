@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "632735332202",
+    "project_id": "dentex-e288e",
+    "storage_bucket": "dentex-e288e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632735332202:android:47bdc84571683ffead9713",
+        "android_client_info": {
+          "package_name": "com.example.dentex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCywit0UZb2zvvisZnNyyFLJws_mVka130"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632735332202:android:0b239a26f6e87e5cad9713",
+        "android_client_info": {
+          "package_name": "com.example.designs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCywit0UZb2zvvisZnNyyFLJws_mVka130"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

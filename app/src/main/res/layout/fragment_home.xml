@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Patient.pt_home_fr">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="מרפאת חיוך מושלם"
+        android:textColor="#8DEEFD"
+        android:textColorLink="#952828"
+        android:textSize="46sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="מרכז מומחים רב תחומי"
+        android:textColor="#8DEEFD"
+        android:textColorLink="#952828"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="דר סיוון שפיר - רופאת שיניים כללית"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#952828"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="דר גל הרמן - מומחה לכירורגיה פה ולסת"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#952828"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="דר גיא נבון - מומחה לטיפולי שורש"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#952828"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="דר דור איינס -  רופא שיניים כללי "
+        android:textColor="#FFFFFF"
+        android:textColorLink="#952828"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="נופר לוי - שיננית"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#952828"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#123564"
+        android:gravity="center"
+        android:text="טלפון: 03-333-3333"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#952828"
+        android:textSize="24sp" />
+</LinearLayout>

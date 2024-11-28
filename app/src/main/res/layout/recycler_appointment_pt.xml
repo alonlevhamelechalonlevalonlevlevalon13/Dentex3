@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:background="#8DEEFD"
+    android:layoutDirection="rtl">
+
+
+    <TextView
+        android:id="@+id/Treatment"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:maxLines="1"
+        android:text="עקירה"
+        android:textColor="#123564"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/examPic"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/Treatment"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:backgroundTint="#123564"
+        app:srcCompat="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/Doctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Treatment"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/examPic"
+        android:gravity="center"
+        android:text="גל הרמן"
+        android:textColor="#123564"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/examPic2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/Doctor"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:backgroundTint="#123564"
+        android:foregroundTint="#123564"
+        app:srcCompat="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Doctor"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/examPic2"
+        android:gravity="center"
+        android:text="30/11,13:30-14:00"
+        android:textColor="#123564"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/border2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="#123564" />
+
+
+</RelativeLayout> 
