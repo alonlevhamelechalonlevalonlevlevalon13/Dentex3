@@ -1,27 +1,29 @@
 package com.example.dentex.FireBase;
 
 import android.util.Log;
+
+import com.example.dentex.Patient.Appointment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
-public class FSUserHelper {
+public class FBUserHelper {
     private static final String TAG = "FireStoreHelper Tag";
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionRef;
-    private FSUserHelper.FBReply fbReply;
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FBUserHelper.FBReply fbReply;
+    private static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private static CollectionReference collectionRef = db.collection("users");
 
     public interface FBReply {
         void getAllSuccess(ArrayList<User> users);
         void getOneSuccess(User user);
     }
 
-    public FSUserHelper(FSUserHelper.FBReply fbReply) {
+    public FBUserHelper(FBUserHelper.FBReply fbReply) {
         this.fbReply = fbReply;
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        collectionRef = db.collection("users").document(currentUser.getUid()).collection("my_users");
     }
 
     public void add(User user) {
@@ -33,7 +35,7 @@ public class FSUserHelper {
     }
 
     public void update(String id, User user) {
-        collectionRef.document(id).update("Name", user.getName(), "Password", user.getPassword()).addOnSuccessListener(aVoid -> {
+        collectionRef.document(id).update("Name", user.getName()).addOnSuccessListener(aVoid -> {
             Log.d(TAG, "DocumentSnapshot updated with ID: " + id);
         }).addOnFailureListener(e -> {
             Log.w(TAG, "Error updating document", e);

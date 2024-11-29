@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-    <item
-        android:id="@+id/page_1"
-        android:icon="@drawable/calendar"
-        android:title="כל התורים"/>
-    <item
-        android:id="@+id/page_3"
-        android:icon="@drawable/plus"
-        android:title="תור חדש"/>
-    <item
-        android:id="@+id/page_2"
-        android:icon="@drawable/home"
-        android:title="דף הבית" />
+        <item
+            android:id="@+id/page_2"
+            android:icon="@drawable/home"
+            android:title="דף הבית" />
+        <item
+            android:id="@+id/page_3"
+            android:icon="@drawable/plus"
+            android:title="תור חדש"/>
+        <item
+            android:id="@+id/page_1"
+            android:icon="@drawable/calendar"
+            android:title="כל התורים"/>
+
     </group>
 </menu>

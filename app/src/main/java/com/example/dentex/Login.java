@@ -31,9 +31,9 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fbAuthHelper = new FBAuthHelper(this, this);
-        if (fbAuthHelper.isLoggedIn()){
-            startActivity(new Intent(this, Patient.class));
-        }
+        //if (fbAuthHelper.isLoggedIn()){
+      //      startActivity(new Intent(this, Patient.class));
+     //   }
         EtE = findViewById(R.id.ETE);
         EtP = findViewById(R.id.ETP);
         BtnS = findViewById(R.id.BtnS);
@@ -47,12 +47,11 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply {
         BtnL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkEmailValidity(EtE.getText().toString()) &&
-                        checkPasswordValidity(EtP.getText().toString() , EtP.getText().toString())) {
-
-                    fbAuthHelper.login(
-                            EtE.getText().toString(),
-                            EtP.getText().toString());
+                if (checkEmailValidity(EtE.getText().toString()) && checkPasswordValidity(EtP.getText().toString() , EtP.getText().toString())) {
+                    fbAuthHelper.login(EtE.getText().toString(), EtP.getText().toString());
+                }
+                else{
+                    Toast.makeText(Login.this,"שגיאת התחברות",Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -7,14 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.dentex.FireBase.FBAuthHelper;
-import com.example.dentex.FireBase.FSUserHelper;
+import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
 import com.example.dentex.Patient.Patient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.FBReply, FSUserHelper.FBReply{
+public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.FBReply, FBUserHelper.FBReply{
 
     private FirebaseAuth mAuth;
     private static final String TAG = "alon";
@@ -34,17 +30,14 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     private EditText ETN;
     private Button BtnS;
     private FBAuthHelper fbAuthHelper;///
-    private FSUserHelper fsUserHelper;
+    private FBUserHelper fsUserHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         fbAuthHelper = new FBAuthHelper(this, this);
-        fsUserHelper = new FSUserHelper( this);
-        if (fbAuthHelper.isLoggedIn()){
-            startActivity(new Intent(this, Patient.class));
-        }
+        fsUserHelper = new FBUserHelper( this);
         EtE = findViewById(R.id.ETE2);
         EtP = findViewById(R.id.ETP3);
         ETN = findViewById(R.id.ETN);
@@ -88,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     }
     @Override
     public void createUserSuccess(FirebaseUser user) {
-        User user1 = new User(ETN.getText().toString(), EtP.getText().toString(), EtP2.getText().toString());
+        User user1 = new User(ETN.getText().toString());
         fsUserHelper.add(user1);
         startActivity(new Intent(this, Patient.class));
     }

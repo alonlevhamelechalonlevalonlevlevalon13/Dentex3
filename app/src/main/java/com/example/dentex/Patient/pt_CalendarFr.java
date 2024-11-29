@@ -10,14 +10,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dentex.FireBase.FBAuthHelper;
+import com.example.dentex.FireBase.FBUserHelper;
+import com.example.dentex.FireBase.User;
 import com.example.dentex.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class pt_CalendarFr extends Fragment {
+public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply {
     private String param1;
     private String param2;
+    private FBUserHelper fbUserHelper;
+    private ArrayList<Appointment> appointments;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -26,6 +33,7 @@ public class pt_CalendarFr extends Fragment {
             param1 = getArguments().getString("param1");
             param2 = getArguments().getString("param2");
         }
+         fbUserHelper = new FBUserHelper(this);
     }
 
     @Override
@@ -53,23 +61,22 @@ public class pt_CalendarFr extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        ArrayList<Appointment> Applist = getData();
-        PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(Applist);
+        String id = FirebaseAuth.getInstance().getUid();
+        fbUserHelper.getOne(id);
+        PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(appointments);
         RecyclerView recyclerView = view.findViewById(R.id.Rv1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(itemAdapter);
     }
-    public ArrayList<Appointment> getData(){
-        ArrayList<Appointment> AppointmentList = new ArrayList<Appointment>();
-        Date date = new Date(2024,12,03,11,30);
-        Appointment emp1 = new Appointment(date, "גל הרמן", "עקירה");
-        AppointmentList.add(emp1);
-        Appointment emp2 = new Appointment(date,"גיא נבון", "טיפול שורש");
-        AppointmentList.add(emp2);
-        date.setMonth(11);
-        Appointment emp3 = new Appointment(date,"דור איינס", "בדיקה");
-        AppointmentList.add(emp3);
-        return AppointmentList;
+
+    @Override
+    public void getAllSuccess(ArrayList<User> users) {
+
+    }
+
+    @Override
+    public void getOneSuccess(User user) {
+        appointments = user.getAppointments();
     }
 }
 

@@ -17,7 +17,6 @@ public class FBAuthHelper {
     private FBReply fbReply;
     private static final String TAG = "alon";
     Activity activity;
-    private FBReply fbReplay;
 
 
     public interface FBReply{
@@ -28,7 +27,7 @@ public class FBAuthHelper {
     public FBAuthHelper(Activity activity, FBReply fbReply) {
         mAuth = FirebaseAuth.getInstance();
         this.activity =activity;
-        this.fbReplay = fbReplay;
+        this.fbReply = fbReply;
     }
 
     public FirebaseUser getCurrentUser() {return mAuth.getCurrentUser();}
@@ -45,6 +44,7 @@ public class FBAuthHelper {
                                 fbReply.createUserSuccess(user);
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(activity, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

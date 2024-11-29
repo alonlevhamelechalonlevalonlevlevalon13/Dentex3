@@ -1,21 +1,23 @@
 package com.example.dentex.FireBase;
 
+import com.example.dentex.Patient.Appointment;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 public class User {
     String name;
-    String password;
+    ArrayList<Appointment> appointments;
     String userType;
 
-    public User(String name, String password, String password2) {
+    public User(String name) {
         this.name = name;
         this.userType = "Patient";
-        if (password == password2)
-            this.password = password;
+        this.appointments = new ArrayList<>();
     }
 
-    public User(String name, String password, String password2, String userType) {
+    public User(String name, String userType) {
         this.name = name;
-        if (password == password2)
-            this.password = password;
         if (userType.equals("Doctor")||userType.equals("Clinic"))
             this.userType = userType;
         else {
@@ -23,7 +25,12 @@ public class User {
         }
 
     }
-
+    public void addAppointment(Date date, String Dname, String treatmentType){
+        appointments.add(new Appointment(date,Dname,treatmentType));
+    }
+    public void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+    }
     public String getUserType() {
         return userType;
     }
@@ -40,12 +47,11 @@ public class User {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public ArrayList<Appointment> getAppointments() {
+        return appointments;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAppointments(ArrayList<Appointment> appointments) {
+        this.appointments = appointments;
     }
-
 }

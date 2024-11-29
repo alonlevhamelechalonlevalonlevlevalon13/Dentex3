@@ -66,6 +66,7 @@ public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.Ite
 
     @Override
     public void onItemClick(View view, int position) {
-        Dialog dialog = new Dialog(getContext());
+        //TODO maybe add dialog "are you sure?"
+
     }
 }
