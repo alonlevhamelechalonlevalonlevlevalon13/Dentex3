@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dentex.FireBase.FBAuthHelper;
-import com.example.dentex.Patient.Patient;
+import com.example.dentex.Patient.PatientActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -83,12 +83,12 @@ private boolean checkPasswordValidity(String password, String confirm) {
     }
     @Override
     public void createUserSuccess(FirebaseUser user) {
-        startActivity(new Intent(this, Patient.class));
+        startActivity(new Intent(this, PatientActivity.class));
     }
 
     @Override
     public void loginSuccess(FirebaseUser user) {
-        startActivity(new Intent(this, Patient.class));
+        startActivity(new Intent(this, PatientActivity.class));
     }
     public void createUserFail(){
         Toast.makeText(Login.this,"יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();

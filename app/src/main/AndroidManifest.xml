@@ -23,7 +23,7 @@
             android:name=".Doctor"
             android:exported="false" />
         <activity
-            android:name=".Patient.Patient"
+            android:name=".Patient.PatientActivity"
             android:exported="false" />
         <activity
             android:name=".Login"

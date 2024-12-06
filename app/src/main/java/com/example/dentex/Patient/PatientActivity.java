@@ -7,15 +7,11 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dentex.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-
-public class Patient extends AppCompatActivity {
+public class PatientActivity extends AppCompatActivity {
 BottomNavigationView bottomNavigationView;
 TextView tv;
     @Override
@@ -36,7 +32,7 @@ TextView tv;
                         return true;
                     case "תור חדש":
                         tv.setText("בחר סוג טיפול ורופא");
-                        replaceFragment(new pt_newAppointment_fr(Patient.this));
+                        replaceFragment(new pt_newAppointment_fr(PatientActivity.this));
                         return true;
                     case "דף הבית":
                         replaceFragment(new pt_home_fr());

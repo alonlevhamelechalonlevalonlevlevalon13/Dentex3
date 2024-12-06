@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.dentex.FireBase.FBAuthHelper;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
-import com.example.dentex.Patient.Patient;
+import com.example.dentex.Patient.PatientActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -83,12 +83,12 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     public void createUserSuccess(FirebaseUser user) {
         User user1 = new User(ETN.getText().toString());
         fsUserHelper.add(user1);
-        startActivity(new Intent(this, Patient.class));
+        startActivity(new Intent(this, PatientActivity.class));
     }
 
     @Override
     public void loginSuccess(FirebaseUser user) {
-        startActivity(new Intent(this, Patient.class));
+        startActivity(new Intent(this, PatientActivity.class));
     }
     public void createUserFail(){
         Toast.makeText(RegisterActivity.this,"יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
