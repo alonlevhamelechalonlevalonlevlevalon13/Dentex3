@@ -1,4 +1,4 @@
-package com.example.dentex;
+package com.example.dentex.Entry;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.example.dentex.FireBase.FBAuthHelper;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
 import com.example.dentex.Patient.PatientActivity;
+import com.example.dentex.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
