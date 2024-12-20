@@ -1,6 +1,10 @@
 package com.example.dentex.Patient;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -10,15 +14,32 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dentex.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class PatientActivity extends AppCompatActivity {
 BottomNavigationView bottomNavigationView;
 TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO add broadcast receiver for boot for the notification
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_patient);
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+
+                    // Get the FCM token
+                    String token = task.getResult();
+                    Log.d("FCM", "FCM Token: " + token);
+
+                    // You can send this token to your server to register the device for notifications
+
+                });
+        createChannel();
         tv=findViewById(R.id.Tv1);
         replaceFragment(new pt_home_fr());
         bottomNavigationView = findViewById(R.id.bNav);
@@ -43,6 +64,18 @@ TextView tv;
             }
         });
     }
+
+    private void createChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "ReminderChannel";
+            String description = "Channel for reminder notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("REMINDER_CHANNEL", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);}
+    }
+
     public void replaceFragment(Fragment fragment)
     {
         androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
