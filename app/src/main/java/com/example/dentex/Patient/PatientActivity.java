@@ -21,10 +21,11 @@ BottomNavigationView bottomNavigationView;
 TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO add broadcast receiver for boot for the notification
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_patient);
+        //TODO add broadcast receiver for boot for the notification
+        createChannel();
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
@@ -39,7 +40,7 @@ TextView tv;
                     // You can send this token to your server to register the device for notifications
 
                 });
-        createChannel();
+
         tv=findViewById(R.id.Tv1);
         replaceFragment(new pt_home_fr());
         bottomNavigationView = findViewById(R.id.bNav);

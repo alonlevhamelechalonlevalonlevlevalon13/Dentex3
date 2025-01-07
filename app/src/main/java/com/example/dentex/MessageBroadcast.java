@@ -13,15 +13,15 @@ import com.example.dentex.Patient.PatientActivity;
 
 public class MessageBroadcast extends BroadcastReceiver {
 
-    private void sendNotification(String messageBody) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "REMINDER_CHANNEL")
+    private void sendNotification(String messageBody, Context context) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "REMINDER_CHANNEL")
                 .setContentTitle("Reminder")
                 .setContentText(messageBody)
                 .setSmallIcon(R.drawable.applogo)
                 .setAutoCancel(true);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(PatientActivity.class);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         notificationManager.notify(0, notificationBuilder.build());
@@ -29,7 +29,7 @@ public class MessageBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        sendNotification("מזכירים שיש לך תור למרפאה שלנו בעוד 24 שעות!");
+        sendNotification("מזכירים שיש לך תור למרפאה שלנו בעוד 24 שעות!", context);
         //TODO מצגת של זאב לשנות את הDATE לתאריך של התור מינוס 1 ביום
     }
 }
