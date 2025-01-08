@@ -1,6 +1,6 @@
 package com.example.dentex.FireBase;
 
-import com.example.dentex.Patient.Appointment;
+import com.example.dentex.Appointments.Appointment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,10 +26,24 @@ public class User {
 
     }
     public void addAppointment(Date date, String Dname, String treatmentType){
-        appointments.add(new Appointment(date,Dname,treatmentType));
+        if (appointments.isEmpty()||date.getTime()>appointments.get(appointments.size()).getDate().getTime()){
+            appointments.add(new Appointment(date,Dname,treatmentType));
+        }
+        for (int i = 0; i < appointments.size(); i++) {
+            if (date.getTime() < this.appointments.get(i).getDate().getTime()){
+                appointments.add(i,new Appointment(date,Dname,treatmentType));
+            }
+        }
     }
     public void addAppointment(Appointment appointment){
-        appointments.add(appointment);
+        if (appointments.isEmpty()||appointment.getDate().getTime()>appointments.get(appointments.size()).getDate().getTime()){
+            appointments.add(appointment);
+        }
+        for (int i = 0; i < appointments.size(); i++) {
+            if (appointment.getDate().getTime() < this.appointments.get(i).getDate().getTime()){
+                appointments.add(i,appointment);
+            }
+        }
     }
     public String getUserType() {
         return userType;

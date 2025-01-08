@@ -1,8 +1,9 @@
 package com.example.dentex.Patient;
 
-import android.app.Dialog;
+import android.Manifest;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.R;
 
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.Ite
 
     @Override
     public void onItemClick(View view, int position) {
-        //TODO maybe add dialog "are you sure?"
-
+        //TODO maybe add dialog "are you sure?
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS},100);
     }
 }

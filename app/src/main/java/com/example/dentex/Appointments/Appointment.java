@@ -1,12 +1,12 @@
-package com.example.dentex.Patient;
+package com.example.dentex.Appointments;
 
 import java.io.Serializable;
 import java.util.Date;
 
 public class Appointment implements Serializable {
-    private final Date date;
-    private final String Drname;
-    private final String TreatmentType;
+    private Date date;
+    private String Drname;
+    private String TreatmentType;
 
     public Appointment(Date date, String Drname, String treatmentType) {
         this.date = date;
@@ -14,11 +14,12 @@ public class Appointment implements Serializable {
         TreatmentType = treatmentType;
     }
 
+    public Appointment(){}
     public String getTreatmentType() {
         return TreatmentType;
     }
 
-    public Date getdate() {
+    public Date getDate() {
         return date;
     }
 

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.R;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class PtAppointmentAdapter extends RecyclerView.Adapter<PtAppointmentAdap
     // number of items in the data set
     @Override
     public int getItemCount() {
+        if (applist == null) {
+            return 0;
+        }
         return applist.size();
     }
 
@@ -46,7 +50,7 @@ public class PtAppointmentAdapter extends RecyclerView.Adapter<PtAppointmentAdap
         Appointment currentApp = applist.get(position);
         holder.TreatmentType.setText(currentApp.getTreatmentType());
         holder.Drname.setText(currentApp.getDrname());
-        holder.Date.setText(currentApp.getdate().toString());
+        holder.Date.setText(currentApp.getDate().toString());
     }
 
     // This class defines the ViewHolder object for each item in the RecyclerView

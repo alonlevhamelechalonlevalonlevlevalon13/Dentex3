@@ -32,9 +32,9 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fbAuthHelper = new FBAuthHelper(this, this);
-        //if (fbAuthHelper.isLoggedIn()){
-      //      startActivity(new Intent(this, Patient.class));
-     //   }
+        if (fbAuthHelper.isLoggedIn()){
+            startActivity(new Intent(this, PatientActivity.class));
+        }
         EtE = findViewById(R.id.ETE);
         EtP = findViewById(R.id.ETP);
         BtnS = findViewById(R.id.BtnS);

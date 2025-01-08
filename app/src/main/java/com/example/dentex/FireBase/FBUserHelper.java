@@ -2,7 +2,6 @@ package com.example.dentex.FireBase;
 
 import android.util.Log;
 
-import com.example.dentex.Patient.Appointment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;

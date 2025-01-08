@@ -4,21 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dentex.FireBase.FBAuthHelper;
+import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
 import com.example.dentex.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply {
     private String param1;
