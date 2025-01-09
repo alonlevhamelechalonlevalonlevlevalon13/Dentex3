@@ -1,13 +1,18 @@
-package com.example.dentex.FireBase;
+package com.example.dentex.Appointments;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.widget.Toast;
 
-import com.example.dentex.Appointments.MessageBroadcast;
-import com.example.dentex.Appointments.Appointment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -63,24 +68,28 @@ public class AppointmentHelper {
         }
         return null;
     }
+    public static void setAlarmForAppointment(Context context,Appointment appointment,String string){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    setAlarmForAppointment(context,appointment);
+                } else {
+                    requestPermissions((Activity) context, new String[]{android.Manifest.permission.POST_NOTIFICATIONS},100);
+                }
+            } else {
+                // For older versions, assume permission is granted
+                setAlarmForAppointment(context,appointment);
+            }
+    }
     public static void setAlarmForAppointment(Context context, Appointment appointment) {
+
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MessageBroadcast.class); // Create an AlarmReceiver
+        Intent intent = new Intent(context, MessageBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        // Calculate the trigger time (one day before the appointment)
         Calendar triggerTime = Calendar.getInstance();
-        triggerTime.setTime(new Date());
-        triggerTime.add(Calendar.MINUTE,+1);
         //triggerTime.setTime(appointment.getDate());
-        //triggerTime.add(Calendar.DAY_OF_YEAR, -1); // Subtract one day
-
-        // Set the alarm
-        Calendar now = Calendar.getInstance();
-        int diff = (int) ((triggerTime.getTimeInMillis() - now.getTimeInMillis()) / 1000);
-        Toast.makeText(context, "diff:"+diff+" time:"+triggerTime.getTimeInMillis(), Toast.LENGTH_SHORT).show();
+        //triggerTime.add(Calendar.DAY_OF_YEAR, -1);
         //TODO: fix this it doesn't call the MessageBroadcast
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis() +100 , pendingIntent);
     }
     public interface AddAppointmentCallback {
         void onAppointmentAdded(String appointmentId);

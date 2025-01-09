@@ -1,4 +1,4 @@
-package com.example.dentex.Patient;
+package com.example.dentex.Appointments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.R;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class PtAppointmentAdapter extends RecyclerView.Adapter<PtAppointmentAdap
 
     public PtAppointmentAdapter(Context context, ArrayList<Appointment> Data) {
         this.applist = Data;
+        this.context = context;
     }
 
     // This method creates a new ViewHolder object for each item in the RecyclerView
@@ -65,7 +65,7 @@ public class PtAppointmentAdapter extends RecyclerView.Adapter<PtAppointmentAdap
             Date = itemView.findViewById(R.id.Date);
         }
     }
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

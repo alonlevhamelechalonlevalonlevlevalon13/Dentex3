@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.PtAppointmentAdapter;
 import com.example.dentex.R;
 
 import java.util.ArrayList;

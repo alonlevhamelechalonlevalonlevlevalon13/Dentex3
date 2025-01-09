@@ -16,12 +16,13 @@ import com.example.dentex.R;
 
 public class MessageBroadcast extends BroadcastReceiver {
 
-    private void sendNotification(String messageBody, Context context) {
-        Intent intent = new Intent(context,PatientActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, intent, PendingIntent.FLAG_IMMUTABLE);
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Intent intent1 = new Intent(context,PatientActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, intent1, PendingIntent.FLAG_IMMUTABLE);
         Notification notification = new NotificationCompat.Builder(context, "REMINDER_CHANNEL")
                 .setContentTitle("Reminder")
-                .setContentText(messageBody)
+                .setContentText("מזכירים שיש לך תור למרפאה שלנו בעוד 24 שעות!")
                 .setSmallIcon(R.drawable.applogo)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
@@ -34,12 +35,5 @@ public class MessageBroadcast extends BroadcastReceiver {
         }
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
-
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        sendNotification("מזכירים שיש לך תור למרפאה שלנו בעוד 24 שעות!", context);
-        //TODO מצגת של זאב לשנות את הDATE לתאריך של התור מינוס 1 ביום
     }
 }

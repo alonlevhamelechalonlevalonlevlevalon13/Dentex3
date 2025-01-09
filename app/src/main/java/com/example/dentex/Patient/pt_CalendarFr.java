@@ -4,24 +4,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.AppointmentHelper;
+import com.example.dentex.Appointments.PtAppointmentAdapter;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
 import com.example.dentex.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply {
     private String param1;
     private String param2;
     private FBUserHelper fbUserHelper;
-    private ArrayList<Appointment> appointments;
+    private ArrayList<Appointment> appointment;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -60,7 +65,30 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply {
         super.onViewCreated(view, savedInstanceState);
         String id = FirebaseAuth.getInstance().getUid();
         fbUserHelper.getOne(id);
-        PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(appointments);
+        AppointmentHelper.addAppointmentToUser(new Appointment(new Date(), "dr", "trreatment"), new AppointmentHelper.AddAppointmentCallback() {
+            @Override
+            public void onAppointmentAdded(String appointmentId) {
+                Toast.makeText(getContext(), "yay", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAppointmentError(Exception e) {
+
+            }
+        });
+        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
+            @Override
+            public void onAppointmentsLoaded(List<Appointment> appointments) {
+                if (!appointments.isEmpty())
+                    appointment = (ArrayList<Appointment>) appointments;
+            }
+
+            @Override
+            public void onAppointmentsError(Exception e) {
+
+            }
+        });
+        PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(appointment);
         RecyclerView recyclerView = view.findViewById(R.id.Rv1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(itemAdapter);
@@ -73,7 +101,7 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply {
 
     @Override
     public void getOneSuccess(User user) {
-        appointments = user.getAppointments();
+        appointment = user.getAppointments();
     }
 }
 

@@ -15,7 +15,7 @@ import com.example.dentex.R;
 import android.widget.VideoView;
 
 public class Splash extends AppCompatActivity {
-        public static int SPLASH_TIME_OUT=3700;
+        public static int SPLASH_TIME_OUT=1700;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {

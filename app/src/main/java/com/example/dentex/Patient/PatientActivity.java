@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.FireBase.AppointmentHelper;
+import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -110,7 +110,7 @@ TextView tv;
             public void onAppointmentsLoaded(List<Appointment> appointments) {
                 Appointment nearestAppointment = AppointmentHelper.getNearestAppointment(appointments);
                 if (nearestAppointment != null) {
-                    AppointmentHelper.setAlarmForAppointment(PatientActivity.this, nearestAppointment);
+                    AppointmentHelper.setAlarmForAppointment(PatientActivity.this, nearestAppointment, "");
                 }
             }
 
