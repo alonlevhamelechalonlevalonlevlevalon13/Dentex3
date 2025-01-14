@@ -91,11 +91,11 @@ TextView tv;
         fragmentTransaction.commit();
     }
     private void setupAlarms() {
-        AppointmentHelper.addAppointmentToUser(new Appointment(new Date(2024,1,9),"dr","asda"), new AppointmentHelper.AddAppointmentCallback() {
+        AppointmentHelper.addAppointmentToUser(new Appointment(new Date(2025,1,15,8,32),"dr","asda"), new AppointmentHelper.AddAppointmentCallback() {
             @Override
             public void onAppointmentAdded(String appointmentId) {
                 // Appointment added successfully
-                Toast.makeText(PatientActivity.this, "Appointment added with ID: ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PatientActivity.this, "Appointment added", Toast.LENGTH_SHORT).show();
                 // You can now use the appointmentId to refer to this appointment
             }
 
@@ -111,6 +111,7 @@ TextView tv;
                 Appointment nearestAppointment = AppointmentHelper.getNearestAppointment(appointments);
                 if (nearestAppointment != null) {
                     AppointmentHelper.setAlarmForAppointment(PatientActivity.this, nearestAppointment, "");
+                    Toast.makeText(PatientActivity.this, "nearest"+nearestAppointment.getDate().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 

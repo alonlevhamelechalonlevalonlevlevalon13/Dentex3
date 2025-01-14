@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,15 +82,14 @@ public class AppointmentHelper {
             }
     }
     public static void setAlarmForAppointment(Context context, Appointment appointment) {
-
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MessageBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         Calendar triggerTime = Calendar.getInstance();
-        //triggerTime.setTime(appointment.getDate());
-        //triggerTime.add(Calendar.DAY_OF_YEAR, -1);
-        //TODO: fix this it doesn't call the MessageBroadcast
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis() +100 , pendingIntent);
+        triggerTime.setTime(appointment.getDate());
+        triggerTime.add(Calendar.DAY_OF_YEAR, -1);
+        Log.d("Alarm", "Trigger time: " + triggerTime.getTimeInMillis());
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), pendingIntent);
     }
     public interface AddAppointmentCallback {
         void onAppointmentAdded(String appointmentId);
