@@ -1,8 +1,6 @@
 package com.example.dentex.Appointments;
 
 import static androidx.core.app.ActivityCompat.requestPermissions;
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,13 +10,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.example.dentex.FireBase.FBAuthHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,31 +31,36 @@ import java.util.List;
 public class AppointmentHelper {
 
     public interface AppointmentsCallback {
-        void onAppointmentsLoaded(List<Appointment> appointments);
+        List<Appointment> onAppointmentsLoaded(List<Appointment> appointments);
         void onAppointmentsError(Exception e);
     }
 
     public static void getUserAppointments(AppointmentsCallback callback) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = FBAuthHelper.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users").document(userId).collection("appointments")
                     .orderBy("date", Query.Direction.ASCENDING) // Order by date
                     .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        List<Appointment> appointments = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            Appointment appointment = document.toObject(Appointment.class);
-                            appointments.add(appointment);
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<Appointment> appointments = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                Appointment appointment = document.toObject(Appointment.class);
+                                appointments.add(appointment);
+                            }
+                            callback.onAppointmentsLoaded(appointments);
                         }
-                        callback.onAppointmentsLoaded(appointments);
                     })
-                    .addOnFailureListener(e -> {
-                        // Handle errors
-                        System.out.println("Error getting appointments: " + e.getMessage());
-                        callback.onAppointmentsError(e);
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle errors
+                            System.out.println("Error getting appointments: " + e.getMessage());
+                            callback.onAppointmentsError(e);
+                        }
                     });
         } else {
             // No user is signed in

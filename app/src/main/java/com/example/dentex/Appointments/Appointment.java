@@ -15,15 +15,28 @@ public class Appointment implements Serializable {
     }
 
     public Appointment(){}
-    public String getTreatmentType() {
-        return TreatmentType;
-    }
 
     public Date getDate() {
         return date;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getDrname() {
         return Drname;
+    }
+
+    public void setDrname(String drname) {
+        Drname = drname;
+    }
+
+    public String getTreatmentType() {
+        return TreatmentType;
+    }
+
+    public void setTreatmentType(String treatmentType) {
+        TreatmentType = treatmentType;
     }
 }

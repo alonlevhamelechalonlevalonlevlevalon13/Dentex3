@@ -19,7 +19,6 @@ import com.example.dentex.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.Date;
 import java.util.List;
 
 public class PatientActivity extends AppCompatActivity {
@@ -30,7 +29,6 @@ TextView tv;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_patient);
-        setupAlarms();
         createChannel();
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
@@ -89,36 +87,5 @@ TextView tv;
         androidx.fragment.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_section,fragment);
         fragmentTransaction.commit();
-    }
-    private void setupAlarms() {
-        AppointmentHelper.addAppointmentToUser(new Appointment(new Date(2025,1,15,8,32),"dr","asda"), new AppointmentHelper.AddAppointmentCallback() {
-            @Override
-            public void onAppointmentAdded(String appointmentId) {
-                // Appointment added successfully
-                Toast.makeText(PatientActivity.this, "Appointment added", Toast.LENGTH_SHORT).show();
-                // You can now use the appointmentId to refer to this appointment
-            }
-
-            @Override
-            public void onAppointmentError(Exception e) {
-                // Handle the error
-                Toast.makeText(PatientActivity.this, "Error adding appointment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
-            @Override
-            public void onAppointmentsLoaded(List<Appointment> appointments) {
-                Appointment nearestAppointment = AppointmentHelper.getNearestAppointment(appointments);
-                if (nearestAppointment != null) {
-                    AppointmentHelper.setAlarmForAppointment(PatientActivity.this, nearestAppointment, "");
-                    Toast.makeText(PatientActivity.this, "nearest"+nearestAppointment.getDate().toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onAppointmentsError(Exception e) {
-                //Handle error
-            }
-        });
     }
 }

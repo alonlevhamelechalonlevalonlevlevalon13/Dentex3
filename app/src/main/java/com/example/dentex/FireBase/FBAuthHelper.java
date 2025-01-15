@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class FBAuthHelper {
-    private FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     private FBReply fbReply;
     private static final String TAG = "alon";
     Activity activity;
@@ -25,12 +25,11 @@ public class FBAuthHelper {
     }
 
     public FBAuthHelper(Activity activity, FBReply fbReply) {
-        mAuth = FirebaseAuth.getInstance();
         this.activity =activity;
         this.fbReply = fbReply;
     }
 
-    public FirebaseUser getCurrentUser() {return mAuth.getCurrentUser();}
+    public static FirebaseUser getCurrentUser() {return mAuth.getCurrentUser();}
     public boolean isLoggedIn() {return getCurrentUser() != null;}
 
     public void createUser(String email, String password){

@@ -1,6 +1,8 @@
 package com.example.dentex.Patient;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
@@ -11,13 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.Appointments.PtAppointmentAdapter;
 import com.example.dentex.R;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.ItemClickListener {
     private static final String ARG_PARAM1 = "param1";
@@ -51,13 +55,7 @@ public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.Ite
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
-        ArrayList<Appointment> appointments = new ArrayList<>();
-        appointments.add(new Appointment(new Date(1990,12,03,17,30,00),"גל הרמן", "עקירה"));
-        appointments.add(new Appointment(new Date(1990,12,03,17,30,00),"גל הרמן", "עקירה"));
-        appointments.add(new Appointment(new Date(1990,12,03,17,30,00),"גל הרמן", "עקירה"));
-        appointments.add(new Appointment(new Date(1990,12,03,17,30,00),"גל הרמן", "עקירה"));
-        appointments.add(new Appointment(new Date(1990,12,03,17,30,00),"גל הרמן", "עקירה"));
-
+        ArrayList<Appointment> appointments = getlist();
         RecyclerView recyclerView = view.findViewById(R.id.Appointments);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new PtAppointmentAdapter(getContext(), appointments);
@@ -67,9 +65,65 @@ public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.Ite
 
     }
 
+    private ArrayList<Appointment> getlist() {
+        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
+            @Override
+            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
+                return appointments;
+            }
+
+            @Override
+            public void onAppointmentsError(Exception e) {
+
+            }
+        });
+        return null;
+    }
+
     @Override
     public void onItemClick(View view, int position) {
-        //TODO maybe add dialog "are you sure?
+        setupDialog();
+    }
+
+    private void setupDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("האם אתה בטוח?")
+                .setMessage("אתה בטוח שאתה רוצה לקבוע את התור הזה?")
+                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle "Yes" action
+                        performAction();
+                    }
+                })
+                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "הוספת התור התבטלה", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void performAction() {
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS},100);
+        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
+            @Override
+            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
+                Appointment nearestAppointment = AppointmentHelper.getNearestAppointment(appointments);
+                if (nearestAppointment != null) {
+                    AppointmentHelper.setAlarmForAppointment(getContext(), nearestAppointment, "");
+                    Toast.makeText(getContext(), "nearest"+nearestAppointment.getDate().toString(), Toast.LENGTH_SHORT).show();
+                }
+                return appointments;
+            }
+
+            @Override
+            public void onAppointmentsError(Exception e) {
+                //Handle error
+            }
+        });
     }
 }
