@@ -1,5 +1,7 @@
 package com.example.dentex.Appointments;
 
+import android.app.AlarmManager;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ public class Appointment implements Serializable {
     private Date date;
     private String Drname;
     private String TreatmentType;
+    private AlarmManager alarmManager;
 
     public Appointment(Date date, String Drname, String treatmentType) {
         this.date = date;
@@ -38,5 +41,13 @@ public class Appointment implements Serializable {
 
     public void setTreatmentType(String treatmentType) {
         TreatmentType = treatmentType;
+    }
+
+    public AlarmManager getAlarmManager() {
+        return alarmManager;
+    }
+
+    public void setAlarmManager(AlarmManager alarmManager) {
+        this.alarmManager = alarmManager;
     }
 }

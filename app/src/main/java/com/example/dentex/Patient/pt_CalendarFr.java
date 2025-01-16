@@ -29,8 +29,7 @@ import java.util.List;
 public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAppointmentAdapter.ItemClickListener {
     private String param1;
     private String param2;
-    private FBUserHelper fbUserHelper;
-    private List<Appointment> appointment;
+    private RecyclerView recyclerView;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -39,21 +38,16 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
             param1 = getArguments().getString("param1");
             param2 = getArguments().getString("param2");
         }
-         fbUserHelper = new FBUserHelper(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar,
-                container, false);
+        return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
 
-    public static pt_CalendarFr newInstance(String param1,
-                                            String param2)
+    public static pt_CalendarFr newInstance(String param1, String param2)
     {
         pt_CalendarFr fragment = new pt_CalendarFr();
         Bundle args = new Bundle();
@@ -67,27 +61,11 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        AppointmentHelper.addAppointmentToUser(new Appointment(new Date(), "dr", "adasd"), new AppointmentHelper.AddAppointmentCallback() {
-            @Override
-            public void onAppointmentAdded(String appointmentId) {
-                Toast.makeText(getContext(), "added appointment", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAppointmentError(Exception e) {
-
-            }
-        });
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                if (!appointments.isEmpty()){
-                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter((ArrayList<Appointment>) appointments);
-                    RecyclerView recyclerView = view.findViewById(R.id.Rv1);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(itemAdapter);
-                }
-
+                if (!appointments.isEmpty())
+                    setRecyclerView(appointments, view);
                 return appointments;
             }
 
@@ -99,7 +77,12 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
 
     }
 
-
+    public void setRecyclerView( List<Appointment> appointments,View view){
+        PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter((ArrayList<Appointment>) appointments);
+        recyclerView = view.findViewById(R.id.Rv1);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(itemAdapter);
+    }
 
     @Override
     public void getAllSuccess(ArrayList<User> users) {
@@ -108,15 +91,15 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
 
     @Override
     public void getOneSuccess(User user) {
-        appointment = user.getAppointments();
+
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        setupDialog();
+        setupDialog(view,position);
     }
 
-    private void setupDialog() {
+    private void setupDialog(View view, int position) {
         new AlertDialog.Builder(getContext())
                 .setTitle("האם אתה בטוח?")
                 .setMessage("אתה בטוח שאתה רוצה לבטל את התור הזה?")
@@ -124,7 +107,7 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Handle "Yes" action
-                        performAction();
+                        performAction(view, position);
                     }
                 })
                 .setNegativeButton("לא", new DialogInterface.OnClickListener() {
@@ -137,13 +120,14 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
                 .show();
     }
 
-    private void performAction() {
+    private void performAction(View view, int position) {
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                appointments.remove(0);
-                //TODO לבטל את ההתראה יום לפני
-                Toast.makeText(getContext(), "התור בוטל", Toast.LENGTH_SHORT).show();
+                appointments.remove(position);
+                AppointmentHelper.stopAlarm(getContext(), appointments.get(position));
+                Toast.makeText(getContext(), "התור בוטל בהצלחה", Toast.LENGTH_SHORT).show();
+                setRecyclerView(appointments,view);
                 return appointments;
             }
 

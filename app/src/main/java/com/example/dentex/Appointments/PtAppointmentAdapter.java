@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,18 +52,27 @@ public class PtAppointmentAdapter extends RecyclerView.Adapter<PtAppointmentAdap
         holder.TreatmentType.setText(currentApp.getTreatmentType());
         holder.Drname.setText(currentApp.getDrname());
         holder.Date.setText(currentApp.getDate().toString());
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: remove appointment
+            }
+        });
     }
+
 
     // This class defines the ViewHolder object for each item in the RecyclerView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView Date;
         private TextView Drname;
         private TextView TreatmentType;
+        private Button button;
         public MyViewHolder(View itemView) {
             super(itemView);
             TreatmentType = itemView.findViewById(R.id.Treatment);
             Drname = itemView.findViewById(R.id.Doctor);
             Date = itemView.findViewById(R.id.Date);
+            button = itemView.findViewById(R.id.button3);
         }
     }
     public void setClickListener(ItemClickListener itemClickListener) {

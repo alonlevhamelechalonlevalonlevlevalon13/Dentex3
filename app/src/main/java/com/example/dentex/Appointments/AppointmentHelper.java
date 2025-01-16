@@ -99,6 +99,15 @@ public class AppointmentHelper {
         triggerTime.add(Calendar.DAY_OF_YEAR, -1);
         Log.d("Alarm", "Trigger time: " + triggerTime.getTimeInMillis());
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), pendingIntent);
+        appointment.setAlarmManager(alarmManager);
+    }
+    public static void stopAlarm(Context context, Appointment appointment){
+        Intent myIntent = new Intent(context,
+                MessageBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        appointment.getAlarmManager().cancel(pendingIntent);
     }
     public interface AddAppointmentCallback {
         void onAppointmentAdded(String appointmentId);

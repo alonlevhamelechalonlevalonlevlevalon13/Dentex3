@@ -40,14 +40,14 @@
         android:id="@+id/fragment_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1">
+        android:layout_weight="1">
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="0"
         android:gravity="bottom"
         android:orientation="vertical">
 
