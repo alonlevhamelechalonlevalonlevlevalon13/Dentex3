@@ -74,10 +74,10 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="299dp"
+        android:layout_marginStart="289dp"
         android:layout_marginTop="59dp"
         android:backgroundTint="#123564"
-        android:text="Button"
+        android:text="בטל תור"
         android:textColor="#8deefd" />
 
     <TextView

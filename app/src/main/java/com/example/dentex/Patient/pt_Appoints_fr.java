@@ -23,7 +23,7 @@ import com.example.dentex.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.ItemClickListener {
+public class pt_Appoints_fr extends Fragment{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     PtAppointmentAdapter adapter;
@@ -58,8 +58,7 @@ public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.Ite
         ArrayList<Appointment> appointments = getlist();
         RecyclerView recyclerView = view.findViewById(R.id.Appointments);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PtAppointmentAdapter(getContext(), appointments);
-        adapter.setClickListener(this);
+        adapter = new PtAppointmentAdapter(appointments, getContext());
         recyclerView.setAdapter(adapter);
         return view;
 
@@ -80,50 +79,4 @@ public class pt_Appoints_fr extends Fragment implements PtAppointmentAdapter.Ite
         return null;
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        setupDialog();
-    }
-
-    private void setupDialog() {
-        new AlertDialog.Builder(getContext())
-                .setTitle("האם אתה בטוח?")
-                .setMessage("אתה בטוח שאתה רוצה לקבוע את התור הזה?")
-                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle "Yes" action
-                        performAction();
-                    }
-                })
-                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "הוספת התור התבטלה", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                })
-                .create()
-                .show();
-    }
-
-    private void performAction() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS},100);
-        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
-            @Override
-            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                Appointment nearestAppointment = AppointmentHelper.getNearestAppointment(appointments);
-                if (nearestAppointment != null) {
-                    AppointmentHelper.setAlarmForAppointment(getContext(), nearestAppointment, "");
-                    Toast.makeText(getContext(), "nearest"+nearestAppointment.getDate().toString(), Toast.LENGTH_SHORT).show();
-                }
-                return appointments;
-            }
-
-            @Override
-            public void onAppointmentsError(Exception e) {
-                //Handle error
-            }
-        });
-    }
 }

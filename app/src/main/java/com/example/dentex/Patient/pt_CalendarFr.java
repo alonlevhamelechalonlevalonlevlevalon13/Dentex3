@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAppointmentAdapter.ItemClickListener {
+public class pt_CalendarFr extends Fragment  {
     private String param1;
     private String param2;
     private RecyclerView recyclerView;
@@ -64,8 +64,12 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                if (!appointments.isEmpty())
-                    setRecyclerView(appointments, view);
+                if (!appointments.isEmpty()){
+                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter((ArrayList<Appointment>) appointments, getContext());
+                    recyclerView = view.findViewById(R.id.Rv1);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(itemAdapter);
+                }
                 return appointments;
             }
 
@@ -77,66 +81,6 @@ public class pt_CalendarFr extends Fragment implements FBUserHelper.FBReply,PtAp
 
     }
 
-    public void setRecyclerView( List<Appointment> appointments,View view){
-        PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter((ArrayList<Appointment>) appointments);
-        recyclerView = view.findViewById(R.id.Rv1);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(itemAdapter);
-    }
-
-    @Override
-    public void getAllSuccess(ArrayList<User> users) {
-
-    }
-
-    @Override
-    public void getOneSuccess(User user) {
-
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        setupDialog(view,position);
-    }
-
-    private void setupDialog(View view, int position) {
-        new AlertDialog.Builder(getContext())
-                .setTitle("האם אתה בטוח?")
-                .setMessage("אתה בטוח שאתה רוצה לבטל את התור הזה?")
-                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle "Yes" action
-                        performAction(view, position);
-                    }
-                })
-                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create()
-                .show();
-    }
-
-    private void performAction(View view, int position) {
-        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
-            @Override
-            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                appointments.remove(position);
-                AppointmentHelper.stopAlarm(getContext(), appointments.get(position));
-                Toast.makeText(getContext(), "התור בוטל בהצלחה", Toast.LENGTH_SHORT).show();
-                setRecyclerView(appointments,view);
-                return appointments;
-            }
-
-            @Override
-            public void onAppointmentsError(Exception e) {
-                //Handle error
-            }
-        });
-    }
 }
 
 

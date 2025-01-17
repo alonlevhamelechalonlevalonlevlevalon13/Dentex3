@@ -102,12 +102,10 @@ public class AppointmentHelper {
         appointment.setAlarmManager(alarmManager);
     }
     public static void stopAlarm(Context context, Appointment appointment){
-        Intent myIntent = new Intent(context,
-                MessageBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        appointment.getAlarmManager().cancel(pendingIntent);
+        Intent myIntent = new Intent(context, MessageBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+        if (appointment.getAlarmManager()!= null)
+            appointment.getAlarmManager().cancel(pendingIntent);
     }
     public interface AddAppointmentCallback {
         void onAppointmentAdded(String appointmentId);
