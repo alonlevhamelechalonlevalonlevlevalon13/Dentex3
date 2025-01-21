@@ -2,6 +2,8 @@ package com.example.dentex.Appointments;
 
 import android.app.AlarmManager;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,6 +11,8 @@ public class Appointment implements Serializable {
     private Date date;
     private String Drname;
     private String TreatmentType;
+
+    @Exclude
     private AlarmManager alarmManager;
 
     public Appointment(Date date, String Drname, String treatmentType) {

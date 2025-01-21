@@ -14,6 +14,7 @@ public class FBUserHelper {
     private FBUserHelper.FBReply fbReply;
     private static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private static CollectionReference collectionRef = db.collection("users");
+    private static CollectionReference collectionRefAppo = db.collection("users").document(currentUser.getUid()).collection("appointments");
 
     public interface FBReply {
         void getAllSuccess(ArrayList<User> users);
@@ -80,7 +81,10 @@ public class FBUserHelper {
         });
     }
 
-    public CollectionReference getCollectionRef() {
+    public static CollectionReference getCollectionRef() {
         return collectionRef;
+    }
+    public static CollectionReference getCollectionRefAppo() {
+        return collectionRefAppo;
     }
 }

@@ -1,11 +1,7 @@
 package com.example.dentex.Patient;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.Appointments.PtAppointmentAdapter;
+import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +53,21 @@ public class pt_Appoints_fr extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
-        ArrayList<Appointment> appointments = getlist();
         RecyclerView recyclerView = view.findViewById(R.id.Appointments);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PtAppointmentAdapter(appointments, getContext());
+        adapter = new PtAppointmentAdapter(options());
         recyclerView.setAdapter(adapter);
         return view;
 
+    }
+
+    private FirestoreRecyclerOptions<Appointment> options() {
+        //Query query = FirebaseFirestore.getInstance().collection("Appointments???").document(currentUser.getUid()).collection("my_appointments??").orderBy("timestamp", Query.Direction.DESCENDING)
+        Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
+                .setQuery(query , Appointment.class)
+                .build();
+        return options;
     }
 
     private ArrayList<Appointment> getlist() {

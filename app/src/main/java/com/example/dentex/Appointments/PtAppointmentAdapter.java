@@ -22,13 +22,18 @@ import com.example.dentex.R;
 
 import java.util.List;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<PtAppointmentAdapter.MyViewHolder> {
+public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, PtAppointmentAdapter.MyViewHolder> {
     private Context context;
+
+    public PtAppointmentAdapter(@NonNull FirestoreRecyclerOptions<Appointment> options) {
+        super(options);
+    }
+
     // This method creates a new ViewHolder object for each item in the RecyclerView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate the layout for each item and return a new ViewHolder object
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_appointment_pt, parent, false);
         return new MyViewHolder(itemView);
     }
@@ -60,11 +65,11 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<PtAppointment
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                AppointmentHelper.addAppointmentToUser(applist.get(pos), new AppointmentHelper.AddAppointmentCallback() {
+                AppointmentHelper.addAppointmentToUser(appointments.get(pos), new AppointmentHelper.AddAppointmentCallback() {
                     @Override
                     public void onAppointmentAdded(String appointmentId) {
-                        AppointmentHelper.setAlarmForAppointment(context, applist.get(pos));
-                        applist.remove(pos);
+                        AppointmentHelper.setAlarmForAppointment(context, appointments.get(pos));
+                        appointments.remove(pos);
                         Toast.makeText(context, "התוק נקבע בהצלחה", Toast.LENGTH_SHORT).show();
                     }
 
@@ -124,13 +129,14 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<PtAppointment
         });
     }
 
+
     @Override
-    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull Object model) {
+    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Appointment model) {
 
     }
 
     // This class defines the ViewHolder object for each item in the RecyclerView
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView Date;
         private TextView Drname;
         private TextView TreatmentType;

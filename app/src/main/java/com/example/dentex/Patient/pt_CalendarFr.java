@@ -20,7 +20,9 @@ import com.example.dentex.Appointments.PtAppointmentAdapter;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
 import com.example.dentex.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,7 +67,7 @@ public class pt_CalendarFr extends Fragment  {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
                 if (!appointments.isEmpty()){
-                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter((ArrayList<Appointment>) appointments, getContext());
+                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(options());
                     recyclerView = view.findViewById(R.id.Rv1);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(itemAdapter);
@@ -79,6 +81,14 @@ public class pt_CalendarFr extends Fragment  {
             }
         });
 
+    }
+    private FirestoreRecyclerOptions<Appointment> options() {
+        //Query query = FirebaseFirestore.getInstance().collection("Appointments???").document(currentUser.getUid()).collection("my_appointments??").orderBy("timestamp", Query.Direction.DESCENDING)
+        Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
+                .setQuery(query , Appointment.class)
+                .build();
+        return options;
     }
 
 }
