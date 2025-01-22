@@ -55,7 +55,7 @@ public class pt_Appoints_fr extends Fragment{
         View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.Appointments);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PtAppointmentAdapter(options());
+        adapter = new PtAppointmentAdapter(getContext(), options());
         recyclerView.setAdapter(adapter);
         return view;
 
@@ -63,7 +63,8 @@ public class pt_Appoints_fr extends Fragment{
 
     private FirestoreRecyclerOptions<Appointment> options() {
         //Query query = FirebaseFirestore.getInstance().collection("Appointments???").document(currentUser.getUid()).collection("my_appointments??").orderBy("timestamp", Query.Direction.DESCENDING)
-        Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
+        Query query = FBUserHelper.getCollectionRefAppo();
+        //Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();

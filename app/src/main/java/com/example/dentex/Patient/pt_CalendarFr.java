@@ -67,7 +67,7 @@ public class pt_CalendarFr extends Fragment  {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
                 if (!appointments.isEmpty()){
-                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(options());
+                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(getContext(), options());
                     recyclerView = view.findViewById(R.id.Rv1);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(itemAdapter);
@@ -83,8 +83,8 @@ public class pt_CalendarFr extends Fragment  {
 
     }
     private FirestoreRecyclerOptions<Appointment> options() {
-        //Query query = FirebaseFirestore.getInstance().collection("Appointments???").document(currentUser.getUid()).collection("my_appointments??").orderBy("timestamp", Query.Direction.DESCENDING)
-        Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
+        Query query = FBUserHelper.getCollectionRefAppo();
+        //Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();

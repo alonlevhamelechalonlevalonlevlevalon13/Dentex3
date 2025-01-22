@@ -3,6 +3,7 @@ package com.example.dentex.Appointments;
 import static android.app.PendingIntent.getActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,10 +28,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, PtAppointmentAdapter.MyViewHolder> {
     private Context context;
 
-    public PtAppointmentAdapter(@NonNull FirestoreRecyclerOptions<Appointment> options) {
+    public PtAppointmentAdapter(Context context, @NonNull FirestoreRecyclerOptions<Appointment> options) {
         super(options);
+        this.context = context;
     }
-
     // This method creates a new ViewHolder object for each item in the RecyclerView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -88,7 +89,7 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
         });
     }
 
-    private void setupDialog(int pos) {
+    private void setupDialog(Appointment appointment) {
         new AlertDialog.Builder(context)
                 .setTitle("האם אתה בטוח?")
                 .setMessage("אתה בטוח שאתה רוצה לבטל את התור הזה?")
@@ -96,7 +97,7 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Handle "Yes" action
-                        performDeleteAction(pos);
+                        performDeleteAction(appointment);
                     }
                 })
                 .setNegativeButton("לא", new DialogInterface.OnClickListener() {
@@ -110,13 +111,13 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
                 .show();
     }
 
-    private void performDeleteAction(int pos) {
+    private void performDeleteAction(Appointment appointment) {
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                AppointmentHelper.stopAlarm(context, appointments.get(pos));
+                AppointmentHelper.stopAlarm(context, appointment);
                 Toast.makeText(context, "התור בוטל בהצלחה", Toast.LENGTH_SHORT).show();
-                appointments.remove(pos);
+                appointments.remove(appointment);
                 notifyAll();
                 notifyDataSetChanged();
                 return appointments;
@@ -131,8 +132,13 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
 
 
     @Override
-    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Appointment model) {
-
+    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Appointment appointment) {
+        holder.Drname.setText(appointment.getDrname());
+        holder.Date.setText(appointment.getDate().toString());
+        holder.TreatmentType.setText(appointment.getTreatmentType());
+        holder.button.setOnClickListener(v -> {
+            setupDialog(appointment);
+        });
     }
 
     // This class defines the ViewHolder object for each item in the RecyclerView
@@ -148,6 +154,11 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
             Drname = itemView.findViewById(R.id.Doctor);
             Date = itemView.findViewById(R.id.Date);
             button = itemView.findViewById(R.id.button3);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
     }
 }
