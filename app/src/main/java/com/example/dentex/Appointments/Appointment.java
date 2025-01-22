@@ -7,18 +7,34 @@ import com.google.firebase.firestore.Exclude;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Appointment implements Serializable {
-    private Date date;
-    private String Drname;
-    private String TreatmentType;
+public class Appointment{
+    public Date date;
+    public String drname;
+    public String treatmentType;
 
     @Exclude
     private AlarmManager alarmManager;
 
     public Appointment(Date date, String Drname, String treatmentType) {
         this.date = date;
-        this.Drname = Drname;
-        TreatmentType = treatmentType;
+        this.drname = Drname;
+        this.treatmentType = treatmentType;
+    }
+
+    public String getDrname() {
+        return drname;
+    }
+
+    public void setDrname(String drname) {
+        this.drname = drname;
+    }
+
+    public String getTreatmentType() {
+        return treatmentType;
+    }
+
+    public void setTreatmentType(String treatmentType) {
+        this.treatmentType = treatmentType;
     }
 
     public Appointment(){}
@@ -31,26 +47,12 @@ public class Appointment implements Serializable {
         this.date = date;
     }
 
-    public String getDrname() {
-        return Drname;
-    }
-
-    public void setDrname(String drname) {
-        Drname = drname;
-    }
-
-    public String getTreatmentType() {
-        return TreatmentType;
-    }
-
-    public void setTreatmentType(String treatmentType) {
-        TreatmentType = treatmentType;
-    }
-
+    @Exclude
     public AlarmManager getAlarmManager() {
         return alarmManager;
     }
 
+    @Exclude
     public void setAlarmManager(AlarmManager alarmManager) {
         this.alarmManager = alarmManager;
     }
