@@ -1,91 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="115dp"
-    android:background="#8DEEFD"
-    android:layoutDirection="rtl">
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/Treatment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:maxLines="1"
-        android:text="עקירה"
-        android:textColor="#123564"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/examPic"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_below="@+id/Treatment"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="7dp"
-        android:backgroundTint="#123564"
-        app:srcCompat="@drawable/circle" />
-
-    <TextView
-        android:id="@+id/Doctor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Treatment"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_toEndOf="@+id/examPic"
-        android:gravity="center"
-        android:text="גל הרמן"
-        android:textColor="#123564"
-        android:textSize="16sp" />
-
-    <ImageView
-        android:id="@+id/examPic2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_below="@+id/Doctor"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="7dp"
-        android:backgroundTint="#123564"
-        android:foregroundTint="#123564"
-        app:srcCompat="@drawable/circle" />
-
-    <TextView
-        android:id="@+id/Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Doctor"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_toEndOf="@+id/examPic2"
-        android:gravity="center"
-        android:text="30/11,13:30-14:00"
-        android:textColor="#123564"
-        android:textSize="16sp" />
-
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="289dp"
-        android:layout_marginTop="59dp"
-        android:backgroundTint="#123564"
-        android:text="בטל תור"
-        android:textColor="#8deefd" />
-
-    <TextView
-        android:id="@+id/border2"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_alignParentBottom="true"
-        android:background="#123564" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="22dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Treatment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingTop="4dp"
+                android:paddingRight="6dp"
+                android:text="עקירה"
+                android:textColor="#123564"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="2.5dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="2.5dp">
+
+                <ImageView
+                    android:id="@+id/examPic"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/Treatment"
+                    android:backgroundTint="#123564"
+                    android:paddingRight="3dp"
+                    app:srcCompat="@drawable/circle" />
+
+                <TextView
+                    android:id="@+id/Doctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Treatment"
+                    android:layout_toEndOf="@+id/examPic"
+                    android:gravity="center"
+                    android:paddingRight="5dp"
+                    android:text="גל הרמן"
+                    android:textColor="#123564"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingRight="6dp">
+
+                <ImageView
+                    android:id="@+id/examPic2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/Doctor"
+                    android:backgroundTint="#123564"
+                    android:foregroundTint="#123564"
+                    android:paddingRight="3dp"
+                    app:srcCompat="@drawable/circle" />
+
+                <TextView
+                    android:id="@+id/Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Doctor"
+                    android:layout_toEndOf="@+id/examPic2"
+                    android:paddingRight="5dp"
+                    android:text="30/11,13:30-14:00"
+                    android:textColor="#123564"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="5dp"
+                android:backgroundTint="#123564"
+                android:text="בטל תור"
+                android:textColor="#8deefd" />
+
+            <TextView
+                android:id="@+id/border2"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_alignParentBottom="true"
+                android:background="#123564" />
+        </LinearLayout>
 
 
-</RelativeLayout> 
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
