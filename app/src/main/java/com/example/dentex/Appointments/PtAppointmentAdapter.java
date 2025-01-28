@@ -1,7 +1,4 @@
 package com.example.dentex.Appointments;
-
-import static android.app.PendingIntent.getActivity;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;

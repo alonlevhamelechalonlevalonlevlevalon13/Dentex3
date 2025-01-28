@@ -63,6 +63,7 @@ public class pt_CalendarFr extends Fragment  {
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(getContext(), "YOW YOW YOP", Toast.LENGTH_SHORT).show();
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
