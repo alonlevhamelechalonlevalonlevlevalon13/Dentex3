@@ -11,10 +11,8 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.example.dentex.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class PatientActivity extends AppCompatActivity {
 BottomNavigationView bottomNavigationView;
@@ -25,21 +23,6 @@ TextView tv;
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_patient);
         createChannel();
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w("FCM", "Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
-
-                    // Get the FCM token
-                    String token = task.getResult();
-                    Log.d("FCM", "FCM Token: " + token);
-
-                    // You can send this token to your server to register the device for notifications
-
-                });
-
         tv=findViewById(R.id.Tv1);
         replaceFragment(new pt_home_fr());
         bottomNavigationView = findViewById(R.id.bNav);

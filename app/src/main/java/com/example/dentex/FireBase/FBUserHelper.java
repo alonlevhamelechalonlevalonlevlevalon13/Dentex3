@@ -19,6 +19,7 @@ public class FBUserHelper {
     public interface FBReply {
         void getAllSuccess(ArrayList<User> users);
         void getOneSuccess(User user);
+        void addUserSuccess(String id);
     }
 
     public FBUserHelper(FBUserHelper.FBReply fbReply) {
@@ -29,6 +30,7 @@ public class FBUserHelper {
     public void add(User user) {
         collectionRef.add(user).addOnSuccessListener(documentReference -> {
             Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+            this.fbReply.addUserSuccess(documentReference.getId());
         }).addOnFailureListener(e -> {
             Log.w(TAG, "Error adding document", e);
             });

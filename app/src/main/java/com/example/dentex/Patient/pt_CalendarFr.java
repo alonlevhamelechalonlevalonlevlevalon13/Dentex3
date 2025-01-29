@@ -2,6 +2,7 @@ package com.example.dentex.Patient;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,11 +68,17 @@ public class pt_CalendarFr extends Fragment  {
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                if (!appointments.isEmpty()){
-                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(getContext(), options());
+                if (appointments != null && !appointments.isEmpty()) {
+                    Context context = requireContext();  // or getContext() if you're certain it's not null
+                    PtAppointmentAdapter itemAdapter = new PtAppointmentAdapter(context, options());
                     recyclerView = view.findViewById(R.id.Rv1);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(itemAdapter);
+
+                    // Check if recyclerView is valid before using it
+                    if (recyclerView != null) {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        recyclerView.setAdapter(itemAdapter);
+                        itemAdapter.startListening();
+                    }
                 }
                 return appointments;
             }
@@ -84,8 +91,8 @@ public class pt_CalendarFr extends Fragment  {
 
     }
     private FirestoreRecyclerOptions<Appointment> options() {
-        Query query = FBUserHelper.getCollectionRefAppo();
-        //Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
+        //Query query = FBUserHelper.getCollectionRefAppo();
+        Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();

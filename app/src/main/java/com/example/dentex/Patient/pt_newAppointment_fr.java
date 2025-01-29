@@ -13,9 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 
+import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
+
+import java.util.Date;
 
 public class pt_newAppointment_fr extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +64,24 @@ public class pt_newAppointment_fr extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_appointment, container, false);
+        Button butt = view.findViewById(R.id.button2);
+        butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Appointment appointment = new Appointment(new Date(),"Alon","bdika");
+                AppointmentHelper.addAppointmentToUser(appointment, new AppointmentHelper.AddAppointmentCallback() {
+                    @Override
+                    public void onAppointmentAdded(String appointmentId) {
+                        Toast.makeText(activity, "toast addedeeeded appointment"+appointment.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAppointmentError(Exception e) {
+
+                    }
+                });
+            }
+        });
         buttonDoc = view.findViewById(R.id.buttonDoc);
         buttonDoc.setEnabled(false);
         buttonTreat = view.findViewById(R.id.button);

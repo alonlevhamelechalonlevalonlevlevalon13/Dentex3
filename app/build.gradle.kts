@@ -44,7 +44,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.google.firebase:firebase-messaging:23.1.0")
+//    implementation("com.google.firebase:firebase-messaging:23.1.0")
     implementation(libs.firebase.ui.firestore)
     implementation (libs.material.v121)
 }

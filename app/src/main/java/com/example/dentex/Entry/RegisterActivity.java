@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         fbAuthHelper = new FBAuthHelper(this, this);
-        fsUserHelper = new FBUserHelper( this);
+        //fsUserHelper = new FBUserHelper( this);
         EtE = findViewById(R.id.ETE2);
         EtP = findViewById(R.id.ETP3);
         ETN = findViewById(R.id.ETN);
@@ -83,8 +83,9 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     @Override
     public void createUserSuccess(FirebaseUser user) {
         User user1 = new User(ETN.getText().toString());
-        fsUserHelper.add(user1);
-        startActivity(new Intent(this, PatientActivity.class));
+        FBUserHelper fbUserHelper = new FBUserHelper(this);
+        fbUserHelper.add(user1);
+        Toast.makeText(this, "creatig user...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -103,5 +104,10 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     @Override
     public void getOneSuccess(User user) {
 
+    }
+
+    @Override
+    public void addUserSuccess(String id) {
+        startActivity(new Intent(this, PatientActivity.class));
     }
 }
