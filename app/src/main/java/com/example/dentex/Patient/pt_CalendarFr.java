@@ -92,8 +92,10 @@ public class pt_CalendarFr extends Fragment  {
     }
     private FirestoreRecyclerOptions<Appointment> options() {
         //Query query = FBUserHelper.getCollectionRefAppo();
-        Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
+        Query query = FBUserHelper.getCollectionRefAppo()
+                .whereGreaterThan("date", new Date())
+                .orderBy("date", Query.Direction.ASCENDING);
+                FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();
         return options;

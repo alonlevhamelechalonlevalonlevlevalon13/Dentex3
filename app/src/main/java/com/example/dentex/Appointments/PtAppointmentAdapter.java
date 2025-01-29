@@ -33,56 +33,6 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
         return new MyViewHolder(itemView);
     }
 
-//    private void setupDialog2(int pos) {
-//        new AlertDialog.Builder(context)
-//                .setTitle("האם אתה בטוח?")
-//                .setMessage("אתה בטוח שאתה רוצה לקבוע את התור הזה?")
-//                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // Handle "Yes" action
-//                        performAction2(pos);
-//                    }
-//                })
-//                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(context, "הוספת התור התבטלה", Toast.LENGTH_SHORT).show();
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .create()
-//                .show();
-//    }
-//
-//    private void performAction2(int pos) {
-//        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
-//        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
-//            @Override
-//            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-//                AppointmentHelper.addAppointmentToUser(appointments.get(pos), new AppointmentHelper.AddAppointmentCallback() {
-//                    @Override
-//                    public void onAppointmentAdded(String appointmentId) {
-//                        AppointmentHelper.setAlarmForAppointment(context, appointments.get(pos));
-//                        appointments.remove(pos);
-//                        Toast.makeText(context, "התוק נקבע בהצלחה", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onAppointmentError(Exception e) {
-//
-//                    }
-//                });
-//                return appointments;
-//            }
-//
-//            @Override
-//            public void onAppointmentsError(Exception e) {
-//                //Handle error
-//            }
-//        });
-//    }
-
     private void setupDialog(Appointment appointment) {
         new AlertDialog.Builder(context)
                 .setTitle("האם אתה בטוח?")
@@ -137,11 +87,11 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
     }
 
     // This class defines the ViewHolder object for each item in the RecyclerView
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView Date;
-        private TextView Drname;
-        private TextView TreatmentType;
-        private Button button;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView Date;
+        TextView Drname;
+        TextView TreatmentType;
+        Button button;
 
         public MyViewHolder(View itemView) {
             super(itemView);
