@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class FBUserHelper {
     private static final String TAG = "FireStoreHelper Tag";
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FBUserHelper.FBReply fbReply;
     private static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private static CollectionReference collectionRef = db.collection("users");

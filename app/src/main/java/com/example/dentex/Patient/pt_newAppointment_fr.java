@@ -2,6 +2,8 @@ package com.example.dentex.Patient;
 
 import static androidx.core.app.ActivityCompat.invalidateOptionsMenu;
 
+import static com.example.dentex.FireBase.FBUserHelper.db;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,16 +23,18 @@ import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class pt_newAppointment_fr extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String s1 = "All";
-    private String sI;
+    private String treatmentType = "All";
+    private String drName;
     private Activity activity;
     private Button buttonDoc;
     private Button buttonTreat;
+    private Button buttonGen;
     private Button button1;
     private String mParam1;
     private String mParam2;
@@ -65,6 +69,8 @@ public class pt_newAppointment_fr extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_appointment, container, false);
+        buttonGen = view.findViewById(R.id.button2);
+        buttonGen.setEnabled(false);
         buttonDoc = view.findViewById(R.id.buttonDoc);
         buttonDoc.setEnabled(false);
         buttonTreat = view.findViewById(R.id.button);
@@ -92,7 +98,7 @@ public class pt_newAppointment_fr extends Fragment {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         buttonTreat.setText(item.getTitle());
-                        s1 = item.getTitle().toString();
+                        treatmentType = item.getTitle().toString();
                         buttonDoc.setEnabled(true);
                         return true;
                     }
@@ -108,11 +114,19 @@ public class pt_newAppointment_fr extends Fragment {
                 createDoctorPopup(v);
             }
         });
-        button1.setOnClickListener(new View.OnClickListener() {
+        buttonGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),pt_Appoints_fr.class));
-            }
+                Date date = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH,7);
+                    for (int i = 0; i < 10; i++) {
+                        date=calendar.getTime();
+                        db.collection("openappointments").
+                                add(new Appointment(date, drName, treatmentType));
+                    }
+                }
+
         });
         return view;
     }
@@ -134,24 +148,24 @@ public class pt_newAppointment_fr extends Fragment {
         sivan.setEnabled(false);
         nofar.setEnabled(false);
         invalidateOptionsMenu(getActivity());
-        if (s1.equals("All")) {
+        if (treatmentType.equals("All")) {
             dor.setEnabled(true);
             guy.setEnabled(true);
             gal.setEnabled(true);
             sivan.setEnabled(true);
             nofar.setEnabled(true);
         }
-        if (s1.equals("בדיקה")) {
+        if (treatmentType.equals("בדיקה")) {
             dor.setEnabled(true);
             sivan.setEnabled(true);
-        } else if (s1.equals("עקירה")) {
+        } else if (treatmentType.equals("עקירה")) {
             gal.setEnabled(true);
-        } else if (s1.equals("סתימה")) {
+        } else if (treatmentType.equals("סתימה")) {
             dor.setEnabled(true);
             sivan.setEnabled(true);
-        } else if (s1.equals("ניקוי")) {
+        } else if (treatmentType.equals("ניקוי")) {
             nofar.setEnabled(true);
-        } else if (s1.equals("טיפול שורש")) {
+        } else if (treatmentType.equals("טיפול שורש")) {
             guy.setEnabled(true);
         }
         // Set item click listener
@@ -160,7 +174,8 @@ public class pt_newAppointment_fr extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 buttonDoc.setText(item.getTitle());
                 button1.setEnabled(true);
-                sI = item.getTitle().toString();
+                buttonGen.setEnabled(true);
+                drName = item.getTitle().toString();
                 return true;
             }
         });

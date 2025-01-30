@@ -1,5 +1,7 @@
 package com.example.dentex.Patient;
 
+import static com.example.dentex.FireBase.FBUserHelper.db;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +21,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class pt_Appoints_fr extends Fragment{
@@ -62,9 +65,9 @@ public class pt_Appoints_fr extends Fragment{
     }
 
     private FirestoreRecyclerOptions<Appointment> options() {
-        //Query query = FirebaseFirestore.getInstance().collection("Appointments???").document(currentUser.getUid()).collection("my_appointments??").orderBy("timestamp", Query.Direction.DESCENDING)
-        Query query = FBUserHelper.getCollectionRefAppo();
-        //Query query = FBUserHelper.getCollectionRefAppo().orderBy("date", Query.Direction.DESCENDING);
+        Query query = db.collection("openappointments")
+                .whereGreaterThan("date", new Date())
+                .orderBy("date", Query.Direction.ASCENDING);;
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();

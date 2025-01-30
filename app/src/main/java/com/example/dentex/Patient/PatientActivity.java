@@ -1,5 +1,7 @@
 package com.example.dentex.Patient;
 
+import static com.example.dentex.FireBase.FBUserHelper.db;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
@@ -13,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.example.dentex.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class PatientActivity extends AppCompatActivity {
 BottomNavigationView bottomNavigationView;
@@ -47,6 +52,7 @@ TextView tv;
             }
         });
     }
+
 
     private void createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

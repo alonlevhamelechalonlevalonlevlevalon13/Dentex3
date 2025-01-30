@@ -74,16 +74,31 @@ public class AppointmentHelper {
             callback.onAppointmentsLoaded(new ArrayList<>());
         }
     }
-    public static Appointment getNearestAppointment(List<Appointment> appointments) {
-        if (appointments.isEmpty()) return null;
-
-        Date now = new Date();
-        for (Appointment appointment : appointments) {
-            if (appointment.getDate().after(now)) {
-                return appointment;
-            }
-        }
-        return null;
+    public static void getFreeAppointments(String drName, String treatment, AppointmentsCallback callback) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("openappointments")
+                    .orderBy("date", Query.Direction.ASCENDING) // Order by date
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<Appointment> appointments = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                Appointment appointment = document.toObject(Appointment.class);
+                                if (appointment.drname.equals(drName)&&appointment.treatmentType.equals(treatment))
+                                    appointments.add(appointment);
+                            }
+                            callback.onAppointmentsLoaded(appointments);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle errors
+                            System.out.println("Error getting appointments: " + e.getMessage());
+                            callback.onAppointmentsError(e);
+                        }
+                    });
     }
     public static void setAlarmForAppointment(Context context,Appointment appointment,String string){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
