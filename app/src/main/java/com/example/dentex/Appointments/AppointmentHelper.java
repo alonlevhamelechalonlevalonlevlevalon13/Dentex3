@@ -35,6 +35,13 @@ public class AppointmentHelper {
         void onAppointmentsError(Exception e);
     }
 
+
+    public interface RemoveAppointmentsCallback {
+        void onAppointmentsRemoved();
+        void onAppointmentsError(Exception e);
+    }
+
+
     public static void getUserAppointments(AppointmentsCallback callback) {
         FirebaseUser currentUser = FBAuthHelper.getCurrentUser();
         if (currentUser != null) {
@@ -106,6 +113,7 @@ public class AppointmentHelper {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
         if (appointment.getAlarmManager()!= null)
             appointment.getAlarmManager().cancel(pendingIntent);
+
     }
     public interface AddAppointmentCallback {
         void onAppointmentAdded(String appointmentId);
@@ -136,6 +144,29 @@ public class AppointmentHelper {
         } else {
             // No user is signed in
             callback.onAppointmentError(new Exception("No user is signed in."));
+        }
+    }
+    public static void removeAppointment(String id, RemoveAppointmentsCallback callback) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            // Add a new document with a generated ID
+            db.collection("users").document(userId).collection("appointments").document(id).delete()
+                    .addOnSuccessListener(documentReference -> {
+                        callback.onAppointmentsRemoved();
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle errors
+                        System.err.println("Error adding appointment: " + e.getMessage());
+                        callback.onAppointmentsError(e);
+                    });
+        } else {
+            // No user is signed in
+            callback.onAppointmentsError(new Exception("No user is signed in."));
         }
     }
 }

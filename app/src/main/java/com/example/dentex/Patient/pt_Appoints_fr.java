@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.Appointments.AppointmentHelper;
-import com.example.dentex.Appointments.PtAppointmentAdapter;
+import com.example.dentex.Appointments.PtCalendarAdapter;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -24,7 +24,7 @@ import java.util.List;
 public class pt_Appoints_fr extends Fragment{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    PtAppointmentAdapter adapter;
+    PtCalendarAdapter adapter;
     private String mParam1;
     private String mParam2;
 
@@ -55,7 +55,7 @@ public class pt_Appoints_fr extends Fragment{
         View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.Appointments);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PtAppointmentAdapter(getContext(), options());
+        adapter = new PtCalendarAdapter(getContext(), options());
         recyclerView.setAdapter(adapter);
         return view;
 

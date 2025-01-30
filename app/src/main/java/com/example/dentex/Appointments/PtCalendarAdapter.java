@@ -19,10 +19,10 @@ import java.util.Locale;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, PtAppointmentAdapter.MyViewHolder> {
+public class PtCalendarAdapter extends FirestoreRecyclerAdapter<Appointment, PtCalendarAdapter.MyViewHolder> {
     private Context context;
 
-    public PtAppointmentAdapter(Context context, @NonNull FirestoreRecyclerOptions<Appointment> options) {
+    public PtCalendarAdapter(Context context, @NonNull FirestoreRecyclerOptions<Appointment> options) {
         super(options);
         this.context = context;
     }
@@ -33,7 +33,7 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
         return new MyViewHolder(itemView);
     }
 
-    private void setupDialog(Appointment appointment) {
+    private void setupDialog(Appointment appointment, String id) {
         new AlertDialog.Builder(context)
                 .setTitle("האם אתה בטוח?")
                 .setMessage("אתה בטוח שאתה רוצה לבטל את התור הזה?")
@@ -41,7 +41,7 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Handle "Yes" action
-                        performDeleteAction(appointment);
+                        performDeleteAction(appointment, id);
                     }
                 })
                 .setNegativeButton("לא", new DialogInterface.OnClickListener() {
@@ -55,15 +55,21 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
                 .show();
     }
 
-    private void performDeleteAction(Appointment appointment) {
+    private void performDeleteAction(Appointment appointment,String id) {
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
                 AppointmentHelper.stopAlarm(context, appointment);
-                Toast.makeText(context, "התור בוטל בהצלחה", Toast.LENGTH_SHORT).show();
-                appointments.remove(appointment);
-                notifyAll();
-                notifyDataSetChanged();
+                AppointmentHelper.removeAppointment(id, new AppointmentHelper.RemoveAppointmentsCallback() {
+                    @Override
+                    public void onAppointmentsRemoved() {
+                        Toast.makeText(context, "התור בוטל בהצלחה", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAppointmentsError(Exception e) {
+                    }
+                });
                 return appointments;
             }
 
@@ -81,8 +87,9 @@ public class PtAppointmentAdapter extends FirestoreRecyclerAdapter<Appointment, 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         holder.Date.setText(dateFormat.format(appointment.getDate()));
         holder.TreatmentType.setText(appointment.getTreatmentType());
+        String id = this.getSnapshots().getSnapshot(position).getId();
         holder.button.setOnClickListener(v -> {
-            setupDialog(appointment);
+            setupDialog(appointment,id);
         });
     }
 
