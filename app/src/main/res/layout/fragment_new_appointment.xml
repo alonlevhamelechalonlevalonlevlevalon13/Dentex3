@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:backgroundTint="#8DEEFD"
-        android:text="הוסף תור"
+        android:text="generate appointments"
         android:textColor="#123564" />
 
     <Button

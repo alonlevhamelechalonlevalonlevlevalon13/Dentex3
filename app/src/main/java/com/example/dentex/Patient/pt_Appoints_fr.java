@@ -1,7 +1,10 @@
 package com.example.dentex.Patient;
 
 import static com.example.dentex.FireBase.FBUserHelper.db;
+import static com.example.dentex.Patient.pt_newAppointment_fr.drName;
+import static com.example.dentex.Patient.pt_newAppointment_fr.treatmentType;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.Appointments.PtCalendarAdapter;
+import com.example.dentex.Appointments.PtFreeAppointmentAdapter;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -30,6 +34,7 @@ public class pt_Appoints_fr extends Fragment{
     PtCalendarAdapter adapter;
     private String mParam1;
     private String mParam2;
+    private RecyclerView recyclerView;
 
     public pt_Appoints_fr() {
     }
@@ -55,29 +60,40 @@ public class pt_Appoints_fr extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.Appointments);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PtCalendarAdapter(getContext(), options());
-        recyclerView.setAdapter(adapter);
-        return view;
-
+        return  inflater.inflate(R.layout.fragment_pt_appoints, container, false);
     }
 
-    private FirestoreRecyclerOptions<Appointment> options() {
+    private FirestoreRecyclerOptions<Appointment> options() { //פילטרים לתורים פנויים
         Query query = db.collection("openappointments")
                 .whereGreaterThan("date", new Date())
-                .orderBy("date", Query.Direction.ASCENDING);;
+                .whereEqualTo("drname", drName)
+                .whereEqualTo("treatmentType", treatmentType)
+                .orderBy("date", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();
         return options;
     }
 
-    private ArrayList<Appointment> getlist() {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
         AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
             @Override
             public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
+                if (appointments != null && !appointments.isEmpty()) {
+                    Context context = requireContext();  // or getContext() if you're certain it's not null
+                    PtFreeAppointmentAdapter itemAdapter = new PtFreeAppointmentAdapter(context, options());
+                    recyclerView = view.findViewById(R.id.Appointments);
+
+                    // Check if recyclerView is valid before using it
+                    if (recyclerView != null) {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        recyclerView.setAdapter(itemAdapter);
+                        itemAdapter.startListening();
+                    }
+                }
                 return appointments;
             }
 
@@ -86,7 +102,7 @@ public class pt_Appoints_fr extends Fragment{
 
             }
         });
-        return null;
+
     }
 
 }

@@ -1,4 +1,6 @@
 package com.example.dentex.Appointments;
+import static com.example.dentex.FireBase.FBUserHelper.db;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,7 +36,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
         return new PtCalendarAdapter.MyViewHolder(itemView);
     }
 
-   private void setupDialog2(int pos) {
+   private void setupDialog2(Appointment appointment, String id) {
        new AlertDialog.Builder(context)
                .setTitle("האם אתה בטוח?")
                .setMessage("אתה בטוח שאתה רוצה לקבוע את התור הזה?")
@@ -42,7 +44,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                    @Override
                    public void onClick(DialogInterface dialog, int which) {
                        // Handle "Yes" action
-                       performAction2(pos);
+                       performAction2(appointment,id);
                    }
                })
                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
@@ -56,16 +58,18 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                .show();
    }
 
-   private void performAction2(int pos) {
+   private void performAction2(Appointment appointment,String id) {
        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
            @Override
            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-               AppointmentHelper.addAppointmentToUser(appointments.get(pos), new AppointmentHelper.AddAppointmentCallback() {
+               AppointmentHelper.addAppointmentToUser(appointment, new AppointmentHelper.AddAppointmentCallback() {
                    @Override
                    public void onAppointmentAdded(String appointmentId) {
-                       AppointmentHelper.setAlarmForAppointment(context, appointments.get(pos));
-                       //TODO: appointments.remove(pos);
+                       AppointmentHelper.setAlarmForAppointment(context, appointment);
+                       db.collection("openappointments")
+                               .document(id)
+                               .delete();
                        Toast.makeText(context, "התוק נקבע בהצלחה", Toast.LENGTH_SHORT).show();
                    }
 
@@ -90,10 +94,11 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         holder.Date.setText(dateFormat.format(appointment.getDate()));
         holder.TreatmentType.setText(appointment.getTreatmentType());
+        String id = this.getSnapshots().getSnapshot(position).getId();
         holder.button.setText("קבע תור");
         holder.button.setOnClickListener(v -> {
             Toast.makeText(context, "click!", Toast.LENGTH_SHORT).show();
-            setupDialog2(position);
+            setupDialog2(appointment,id);
         });
     }
 

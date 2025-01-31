@@ -29,8 +29,8 @@ import java.util.Date;
 public class pt_newAppointment_fr extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String treatmentType = "All";
-    private String drName;
+    public static String treatmentType = "All";
+    public static String drName;
     private Activity activity;
     private Button buttonDoc;
     private Button buttonTreat;
@@ -117,11 +117,10 @@ public class pt_newAppointment_fr extends Fragment {
         buttonGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date date = new Date();
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_MONTH,7);
+                Date date=calendar.getTime();
                     for (int i = 0; i < 10; i++) {
-                        date=calendar.getTime();
                         db.collection("openappointments").
                                 add(new Appointment(date, drName, treatmentType));
                     }

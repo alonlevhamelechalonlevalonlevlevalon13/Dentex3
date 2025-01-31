@@ -35,14 +35,17 @@ public class AppointmentHelper {
         void onAppointmentsError(Exception e);
     }
 
-
     public interface RemoveAppointmentsCallback {
         void onAppointmentsRemoved();
         void onAppointmentsError(Exception e);
     }
 
+    public interface AddAppointmentCallback {
+        void onAppointmentAdded(String appointmentId);
+        void onAppointmentError(Exception e);
+    }
 
-    public static void getUserAppointments(AppointmentsCallback callback) {
+    public static void getUserAppointments(AppointmentsCallback callback) { //פעולה להחזיר את רשימת התורים של המשתמש המחובר על מנת לעבוד איתה
         FirebaseUser currentUser = FBAuthHelper.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -74,32 +77,7 @@ public class AppointmentHelper {
             callback.onAppointmentsLoaded(new ArrayList<>());
         }
     }
-    public static void getFreeAppointments(String drName, String treatment, AppointmentsCallback callback) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("openappointments")
-                    .orderBy("date", Query.Direction.ASCENDING) // Order by date
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            List<Appointment> appointments = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                Appointment appointment = document.toObject(Appointment.class);
-                                if (appointment.drname.equals(drName)&&appointment.treatmentType.equals(treatment))
-                                    appointments.add(appointment);
-                            }
-                            callback.onAppointmentsLoaded(appointments);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle errors
-                            System.out.println("Error getting appointments: " + e.getMessage());
-                            callback.onAppointmentsError(e);
-                        }
-                    });
-    }
+
     public static void setAlarmForAppointment(Context context,Appointment appointment,String string){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
@@ -112,6 +90,7 @@ public class AppointmentHelper {
                 setAlarmForAppointment(context,appointment);
             }
     }
+
     public static void setAlarmForAppointment(Context context, Appointment appointment) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MessageBroadcast.class);
@@ -123,19 +102,16 @@ public class AppointmentHelper {
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), pendingIntent);
         appointment.setAlarmManager(alarmManager);
     }
-    public static void stopAlarm(Context context, Appointment appointment){
+
+    public static void stopAlarm(Context context, Appointment appointment){//ביטול ההתראה - חלק מביטול התור
         Intent myIntent = new Intent(context, MessageBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
         if (appointment.getAlarmManager()!= null)
             appointment.getAlarmManager().cancel(pendingIntent);
 
     }
-    public interface AddAppointmentCallback {
-        void onAppointmentAdded(String appointmentId);
-        void onAppointmentError(Exception e);
-    }
 
-    public static void addAppointmentToUser(Appointment appointment, AddAppointmentCallback callback) {
+    public static void addAppointmentToUser( Appointment appointment, AddAppointmentCallback callback) { // הוספת תור למערך של המשתמש המחובר
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
@@ -161,7 +137,7 @@ public class AppointmentHelper {
             callback.onAppointmentError(new Exception("No user is signed in."));
         }
     }
-    public static void removeAppointment(String id, RemoveAppointmentsCallback callback) {
+    public static void removeAppointment(String id, RemoveAppointmentsCallback callback) { //הוצאת התור מהדאטאבייס
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
@@ -170,7 +146,10 @@ public class AppointmentHelper {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             // Add a new document with a generated ID
-            db.collection("users").document(userId).collection("appointments").document(id).delete()
+            db.collection("users").document(userId)
+                    .collection("appointments")
+                    .document(id)
+                    .delete()
                     .addOnSuccessListener(documentReference -> {
                         callback.onAppointmentsRemoved();
                     })
