@@ -8,32 +8,23 @@ import java.util.Date;
 public class User {
     String name;
     ArrayList<Appointment> appointments;
-    String userType;
+    Boolean isDoc;
 
     public User(String name) {
         this.name = name;
-        this.userType = "Patient";
+        this.isDoc = false;
         this.appointments = new ArrayList<>();
     }
 
     public User(String name, String userType) {
         this.name = name;
-        if (userType.equals("Doctor")||userType.equals("Clinic"))
-            this.userType = userType;
+        if (userType.equals("Doctor"))
+            this.isDoc = true;
         else {
-            this.userType = "Patient";
+            this.isDoc = false;
+            this.appointments = new ArrayList<>();
         }
 
-    }
-    public void addAppointment(Date date, String Dname, String treatmentType){
-        if (appointments.isEmpty()||date.getTime()>appointments.get(appointments.size()).getDate().getTime()){
-            appointments.add(new Appointment(date,Dname,treatmentType));
-        }
-        for (int i = 0; i < appointments.size(); i++) {
-            if (date.getTime() < this.appointments.get(i).getDate().getTime()){
-                appointments.add(i,new Appointment(date,Dname,treatmentType));
-            }
-        }
     }
     public void addAppointment(Appointment appointment){
         if (appointments.isEmpty()||appointment.getDate().getTime()>appointments.get(appointments.size()).getDate().getTime()){
@@ -45,12 +36,13 @@ public class User {
             }
         }
     }
-    public String getUserType() {
-        return userType;
+
+    public Boolean getDoc() {
+        return isDoc;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setDoc(Boolean doc) {
+        isDoc = doc;
     }
 
     public String getName() {

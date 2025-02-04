@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class FBUserHelper {
     private static final String TAG = "FireStoreHelper Tag";
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FBUserHelper.FBReply fbReply;
+    private static FBUserHelper.FBReply fbReply;
     private static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private static CollectionReference collectionRef = db.collection("users");
     private static CollectionReference collectionRefAppo = db.collection("users").document(currentUser.getUid()).collection("appointments");
@@ -82,7 +82,6 @@ public class FBUserHelper {
             }
         });
     }
-
     public static CollectionReference getCollectionRef() {
         return collectionRef;
     }

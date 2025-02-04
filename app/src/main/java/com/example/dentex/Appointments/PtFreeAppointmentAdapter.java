@@ -101,5 +101,4 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
             setupDialog2(appointment,id);
         });
     }
-
 }

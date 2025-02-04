@@ -114,19 +114,6 @@ public class pt_newAppointment_fr extends Fragment {
                 createDoctorPopup(v);
             }
         });
-        buttonGen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DAY_OF_MONTH,7);
-                Date date=calendar.getTime();
-                    for (int i = 0; i < 10; i++) {
-                        db.collection("openappointments").
-                                add(new Appointment(date, drName, treatmentType));
-                    }
-                }
-
-        });
         return view;
     }
 

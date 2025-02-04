@@ -9,13 +9,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dentex.Doctors.DoctorAppointments;
 import com.example.dentex.FireBase.FBAuthHelper;
+import com.example.dentex.FireBase.FBUserHelper;
+import com.example.dentex.FireBase.User;
 import com.example.dentex.Patient.PatientActivity;
 import com.example.dentex.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Login extends AppCompatActivity implements FBAuthHelper.FBReply {
+import java.util.ArrayList;
+
+public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FBUserHelper.FBReply {
     private FirebaseAuth mAuth;
     private static final String TAG = "alon";
     private String email = "alonlevalon@gmail.com";
@@ -32,8 +37,9 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fbAuthHelper = new FBAuthHelper(this, this);
-        if (fbAuthHelper.isLoggedIn()){
-            startActivity(new Intent(this, PatientActivity.class));
+        if (fbAuthHelper.isLoggedIn()) {
+            FBUserHelper fbUserHelper = new FBUserHelper(this);
+            fbUserHelper.getOne(FBAuthHelper.getCurrentUser().getUid());
         }
         EtE = findViewById(R.id.ETE);
         EtP = findViewById(R.id.ETP);
@@ -48,30 +54,32 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply {
         BtnL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkEmailValidity(EtE.getText().toString()) && checkPasswordValidity(EtP.getText().toString() , EtP.getText().toString())) {
+                if (checkEmailValidity(EtE.getText().toString()) && checkPasswordValidity(EtP.getText().toString(), EtP.getText().toString())) {
                     fbAuthHelper.login(EtE.getText().toString(), EtP.getText().toString());
-                }
-                else{
-                    Toast.makeText(Login.this,"שגיאת התחברות",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Login.this, "שגיאת התחברות", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
+
     @Override
     public void onStart() {
         super.onStart();
 
-        }
-private boolean checkPasswordValidity(String password, String confirm) {
-    if (password.length() >= 6 && password.equals(confirm)) {
-        // Password is valid
-        return true;
-    } else {
-        // Password is invalid, show an error message
-        EtP.setError("Password must be 6 characters or longer");
-        return false;
     }
-}
+
+    private boolean checkPasswordValidity(String password, String confirm) {
+        if (password.length() >= 6 && password.equals(confirm)) {
+            // Password is valid
+            return true;
+        } else {
+            // Password is invalid, show an error message
+            EtP.setError("Password must be 6 characters or longer");
+            return false;
+        }
+    }
+
     private boolean checkEmailValidity(String email) {
         if (EtE != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // Email is valid
@@ -82,6 +90,7 @@ private boolean checkPasswordValidity(String password, String confirm) {
             return false;
         }
     }
+
     @Override
     public void createUserSuccess(FirebaseUser user) {
         startActivity(new Intent(this, PatientActivity.class));
@@ -89,9 +98,27 @@ private boolean checkPasswordValidity(String password, String confirm) {
 
     @Override
     public void loginSuccess(FirebaseUser user) {
+        //TODO: afnkenknfnskjnesbf kjb forward doctors to their activity
         startActivity(new Intent(this, PatientActivity.class));
     }
-    public void createUserFail(){
-        Toast.makeText(Login.this,"יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
+
+    public void createUserFail() {
+        Toast.makeText(Login.this, "יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void getAllSuccess(ArrayList<User> users) {
+    }
+
+    @Override
+    public void getOneSuccess(User user) {
+        if (user.getDoc()){
+            startActivity(new Intent(this, DoctorAppointments.class));
+        }else
+            startActivity(new Intent(this, PatientActivity.class));
+    }
+
+    @Override
+    public void addUserSuccess(String id) {
     }
 }
