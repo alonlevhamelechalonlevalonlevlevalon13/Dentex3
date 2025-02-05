@@ -69,13 +69,10 @@ public class pt_newAppointment_fr extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_appointment, container, false);
-        buttonGen = view.findViewById(R.id.button2);
-        buttonGen.setEnabled(false);
         buttonDoc = view.findViewById(R.id.buttonDoc);
         buttonDoc.setEnabled(false);
         buttonTreat = view.findViewById(R.id.button);
         button1 = view.findViewById(R.id.buttonSubmit2);
-        button1.setEnabled(false);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

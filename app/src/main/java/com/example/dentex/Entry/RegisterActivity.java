@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
         User user1 = new User(ETN.getText().toString());
         FBUserHelper fbUserHelper = new FBUserHelper(this);
         fbUserHelper.add(user1);
-        Toast.makeText(this, "creatig user...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "creating user...", Toast.LENGTH_SHORT).show();
     }
 
     @Override

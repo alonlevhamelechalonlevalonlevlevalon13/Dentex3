@@ -34,6 +34,7 @@ public class pt_Appoints_fr extends Fragment{
     PtCalendarAdapter adapter;
     private String mParam1;
     private String mParam2;
+    Query query;
     private RecyclerView recyclerView;
 
     public pt_Appoints_fr() {
@@ -63,12 +64,16 @@ public class pt_Appoints_fr extends Fragment{
         return  inflater.inflate(R.layout.fragment_pt_appoints, container, false);
     }
 
-    private FirestoreRecyclerOptions<Appointment> options() { //פילטרים לתורים פנויים
-        Query query = db.collection("openappointments")
+    private FirestoreRecyclerOptions<Appointment> options() {
+        if (drName==null||treatmentType==null){
+             query = db.collection("openappointments")
+                    .whereGreaterThan("date", new Date())
+                    .orderBy("date", Query.Direction.ASCENDING);
+        }else { query = db.collection("openappointments")
                 .whereGreaterThan("date", new Date())
                 .whereEqualTo("drname", drName)
                 .whereEqualTo("treatmentType", treatmentType)
-                .orderBy("date", Query.Direction.ASCENDING);
+                .orderBy("date", Query.Direction.ASCENDING);}
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();

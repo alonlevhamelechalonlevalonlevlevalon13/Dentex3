@@ -39,7 +39,10 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
         fbAuthHelper = new FBAuthHelper(this, this);
         if (fbAuthHelper.isLoggedIn()) {
             FBUserHelper fbUserHelper = new FBUserHelper(this);
-            fbUserHelper.getOne(FBAuthHelper.getCurrentUser().getUid());
+            if(FBAuthHelper.getCurrentUser().getEmail().equals("manager123@gmail.com"))
+                startActivity(new Intent(this, DoctorAppointments.class));
+            else
+                startActivity(new Intent(this, PatientActivity.class));
         }
         EtE = findViewById(R.id.ETE);
         EtP = findViewById(R.id.ETP);
@@ -98,8 +101,11 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
 
     @Override
     public void loginSuccess(FirebaseUser user) {
-        //TODO: afnkenknfnskjnesbf kjb forward doctors to their activity
-        startActivity(new Intent(this, PatientActivity.class));
+        FBUserHelper fbUserHelper = new FBUserHelper(this);
+        if(user.getEmail().equals("manager123@gmail.com"))
+            startActivity(new Intent(this, DoctorAppointments.class));
+        else
+            startActivity(new Intent(this, PatientActivity.class));
     }
 
     public void createUserFail() {
@@ -112,10 +118,6 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
 
     @Override
     public void getOneSuccess(User user) {
-        if (user.getDoc()){
-            startActivity(new Intent(this, DoctorAppointments.class));
-        }else
-            startActivity(new Intent(this, PatientActivity.class));
     }
 
     @Override

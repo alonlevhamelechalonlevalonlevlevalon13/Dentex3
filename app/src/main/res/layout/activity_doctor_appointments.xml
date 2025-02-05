@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:paddingRight="50dp"
-            android:text="דף הבית"
+            android:text="פרסום תורים"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -42,19 +42,31 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="בחר תאריך ושעה" />
+
         <EditText
             android:id="@+id/editTextText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="enter your proffesion"
-            android:inputType="text" />
+            android:hint="הכנס/י שם רופא/ה:"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#CCFFFFFF" />
 
-        <Button
-            android:id="@+id/buttonGenerate"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/editTextText2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:ems="10"
+            android:hint="הכנס/י סוג טיפול:"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#CCFFFFFF" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,17 +76,11 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bNav"
+        <Button
+            android:id="@+id/button4"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_alignParentBottom="true"
-            android:foregroundTint="#FFFFFF"
-            app:itemIconSize="30dp"
-            app:itemIconTint="#123564"
-            app:itemPaddingBottom="3dp"
-            app:itemPaddingTop="4dp"
-            app:menu="@menu/menu_patient" />
+            android:layout_height="wrap_content"
+            android:text="פרסם תור" />
 
     </LinearLayout>
 
