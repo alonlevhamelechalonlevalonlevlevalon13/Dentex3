@@ -1,10 +1,12 @@
 package com.example.dentex.Doctors;
 
+import static android.content.ContentValues.TAG;
 import static com.example.dentex.FireBase.FBUserHelper.db;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dentex.Appointments.Appointment;
@@ -19,6 +22,9 @@ import com.example.dentex.FireBase.FBAuthHelper;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.FireBase.User;
 import com.example.dentex.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,7 +87,19 @@ public class DoctorAppointments extends AppCompatActivity implements
                 Toast.makeText(this, "בבקשה מלא/י את כל השדות", Toast.LENGTH_SHORT).show();
             else {
                 db.collection("openappointments").
-                        add(new Appointment(date, name.getText().toString(), treatment.getText().toString()));
+                        add(new Appointment(date, name.getText().toString(), treatment.getText().toString()))
+                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                Log.d(TAG, "onComplete: "+task.toString());
+                                Log.d(TAG, "onComplete: "+task.toString());
+                                Log.d(TAG, "onComplete: "+task.toString());
+                                Log.d(TAG, "onComplete: "+task.toString());
+                                Log.d(TAG, "onComplete: "+task.toString());
+                                Log.d(TAG, "onComplete: "+task.toString());
+
+                            }
+                        });
                 Toast.makeText(this, "התור נוסף בהצלחה", Toast.LENGTH_SHORT).show();
             }
         }

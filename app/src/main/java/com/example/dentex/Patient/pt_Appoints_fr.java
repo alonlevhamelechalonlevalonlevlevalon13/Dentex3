@@ -61,7 +61,17 @@ public class pt_Appoints_fr extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return  inflater.inflate(R.layout.fragment_pt_appoints, container, false);
+        View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
+        Context context = requireContext();  // or getContext() if you're certain it's not null
+        PtFreeAppointmentAdapter itemAdapter = new PtFreeAppointmentAdapter(context, options());
+        recyclerView = view.findViewById(R.id.Appointments);
+        // Check if recyclerView is valid before using it
+        if (recyclerView != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(itemAdapter);
+            itemAdapter.startListening();
+        }
+        return  view;
     }
 
     private FirestoreRecyclerOptions<Appointment> options() {
@@ -84,29 +94,6 @@ public class pt_Appoints_fr extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
-            @Override
-            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
-                if (appointments != null && !appointments.isEmpty()) {
-                    Context context = requireContext();  // or getContext() if you're certain it's not null
-                    PtFreeAppointmentAdapter itemAdapter = new PtFreeAppointmentAdapter(context, options());
-                    recyclerView = view.findViewById(R.id.Appointments);
-
-                    // Check if recyclerView is valid before using it
-                    if (recyclerView != null) {
-                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                        recyclerView.setAdapter(itemAdapter);
-                        itemAdapter.startListening();
-                    }
-                }
-                return appointments;
-            }
-
-            @Override
-            public void onAppointmentsError(Exception e) {
-
-            }
-        });
 
     }
 

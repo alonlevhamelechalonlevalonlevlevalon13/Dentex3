@@ -156,8 +156,6 @@ public class pt_newAppointment_fr extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 buttonDoc.setText(item.getTitle());
-                button1.setEnabled(true);
-                buttonGen.setEnabled(true);
                 drName = item.getTitle().toString();
                 return true;
             }
