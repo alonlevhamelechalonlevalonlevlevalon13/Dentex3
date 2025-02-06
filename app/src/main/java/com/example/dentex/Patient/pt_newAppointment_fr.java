@@ -34,7 +34,6 @@ public class pt_newAppointment_fr extends Fragment {
     private Activity activity;
     private Button buttonDoc;
     private Button buttonTreat;
-    private Button buttonGen;
     private Button button1;
     private String mParam1;
     private String mParam2;
