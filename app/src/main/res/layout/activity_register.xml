@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#123564"
     android:orientation="vertical"
-    tools:context=".Entry.RegisterActivity">
+    tools:context=".view.RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView3"

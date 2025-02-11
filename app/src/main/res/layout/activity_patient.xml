@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#123564"
     android:orientation="vertical"
-    tools:context=".Patient.PatientActivity">
+    tools:context=".view.PatientActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

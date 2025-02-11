@@ -8,12 +8,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.metrics.Event;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.dentex.FireBase.FBAuthHelper;
+import com.example.dentex.NotificationWorker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AppointmentHelper {
 
@@ -78,29 +84,33 @@ public class AppointmentHelper {
         }
     }
 
-    public static void setAlarmForAppointment(Context context,Appointment appointment,String string){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                    setAlarmForAppointment(context,appointment);
-                } else {
-                    requestPermissions((Activity) context, new String[]{android.Manifest.permission.POST_NOTIFICATIONS},100);
-                }
-            } else {
-                // For older versions, assume permission is granted
-                setAlarmForAppointment(context,appointment);
-            }
-    }
+    public static void scheduleNotification(Context context, Appointment appointment) {
+        // Get the time when the notification should be triggered (Appointment Date)
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(appointment.getDate());
 
-    public static void setAlarmForAppointment(Context context, Appointment appointment) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MessageBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        Calendar triggerTime = Calendar.getInstance();
-        triggerTime.setTime(appointment.getDate());
-        triggerTime.add(Calendar.DAY_OF_YEAR, -1);
-        Log.d("Alarm", "Trigger time: " + triggerTime.getTimeInMillis());
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), pendingIntent);
-        appointment.setAlarmManager(alarmManager);
+        // Calculate the delay in milliseconds from now until the appointment time
+        long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
+
+        // If the appointment time is in the past, we do nothing
+        if (delay <= 0) {
+            return;
+        }
+
+        // Create input data for the Worker (Appointment data)
+        Data inputData = new Data.Builder()
+                .putString("title", "you have a "+appointment.getTreatmentType()+" with "+appointment.getDrname())
+                .putString("message", "Reminder")
+                .build();
+
+        // Create the WorkRequest
+        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS) // Delay the execution until the appointment time
+                .setInputData(inputData)
+                .build();
+
+        // Enqueue the work request with WorkManager
+        WorkManager.getInstance(context).enqueue(workRequest);
     }
 
     public static void stopAlarm(Context context, Appointment appointment){//ביטול ההתראה - חלק מביטול התור
@@ -163,4 +173,5 @@ public class AppointmentHelper {
             callback.onAppointmentsError(new Exception("No user is signed in."));
         }
     }
+
 }

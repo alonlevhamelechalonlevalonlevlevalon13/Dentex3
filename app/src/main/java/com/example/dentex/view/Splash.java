@@ -1,4 +1,4 @@
-package com.example.dentex.Entry;
+package com.example.dentex.view;
 
 import android.content.ContentResolver;
 import android.content.Context;

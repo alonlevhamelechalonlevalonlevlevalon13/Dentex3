@@ -1,4 +1,4 @@
-package com.example.dentex.Patient;
+package com.example.dentex.view.Fragments;
 
 import static com.example.dentex.FireBase.FBAuthHelper.mAuth;
 
@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.dentex.Entry.Login;
 import com.example.dentex.R;
+import com.example.dentex.view.Login;
 
 public class pt_home_fr extends Fragment {
 

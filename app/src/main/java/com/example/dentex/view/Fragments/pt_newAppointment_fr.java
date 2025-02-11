@@ -1,11 +1,8 @@
-package com.example.dentex.Patient;
+package com.example.dentex.view.Fragments;
 
 import static androidx.core.app.ActivityCompat.invalidateOptionsMenu;
 
-import static com.example.dentex.FireBase.FBUserHelper.db;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,15 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 
-import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
-
-import java.util.Calendar;
-import java.util.Date;
+import com.example.dentex.view.PatientActivity;
 
 public class pt_newAppointment_fr extends Fragment {
     private static final String ARG_PARAM1 = "param1";

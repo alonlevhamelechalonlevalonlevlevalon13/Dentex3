@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#123564"
     android:orientation="vertical"
-    tools:context=".Patient.pt_Appoints_fr">
+    tools:context=".view.Fragments.pt_Appoints_fr">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Appointments"

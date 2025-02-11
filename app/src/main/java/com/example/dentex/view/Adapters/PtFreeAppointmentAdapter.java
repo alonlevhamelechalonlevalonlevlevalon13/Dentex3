@@ -1,4 +1,4 @@
-package com.example.dentex.Appointments;
+package com.example.dentex.view.Adapters;
 import static com.example.dentex.FireBase.FBUserHelper.db;
 
 import android.Manifest;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
 
 import java.text.SimpleDateFormat;
@@ -66,7 +68,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                AppointmentHelper.addAppointmentToUser(appointment, new AppointmentHelper.AddAppointmentCallback() {
                    @Override
                    public void onAppointmentAdded(String appointmentId) {
-                       AppointmentHelper.setAlarmForAppointment(context, appointment);
+                       AppointmentHelper.scheduleNotification(context, appointment);
                        db.collection("openappointments")
                                .document(id)
                                .delete();

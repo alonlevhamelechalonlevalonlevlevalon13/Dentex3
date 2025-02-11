@@ -1,8 +1,8 @@
-package com.example.dentex.Patient;
+package com.example.dentex.view.Fragments;
 
 import static com.example.dentex.FireBase.FBUserHelper.db;
-import static com.example.dentex.Patient.pt_newAppointment_fr.drName;
-import static com.example.dentex.Patient.pt_newAppointment_fr.treatmentType;
+import static com.example.dentex.view.Fragments.pt_newAppointment_fr.drName;
+import static com.example.dentex.view.Fragments.pt_newAppointment_fr.treatmentType;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,17 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.Appointments.AppointmentHelper;
-import com.example.dentex.Appointments.PtCalendarAdapter;
-import com.example.dentex.Appointments.PtFreeAppointmentAdapter;
-import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.R;
+import com.example.dentex.view.Adapters.PtCalendarAdapter;
+import com.example.dentex.view.Adapters.PtFreeAppointmentAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class pt_Appoints_fr extends Fragment{
     private static final String ARG_PARAM1 = "param1";

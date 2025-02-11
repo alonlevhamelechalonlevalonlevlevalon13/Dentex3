@@ -1,4 +1,4 @@
-package com.example.dentex.Appointments;
+package com.example.dentex.view.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
 
 import java.text.SimpleDateFormat;

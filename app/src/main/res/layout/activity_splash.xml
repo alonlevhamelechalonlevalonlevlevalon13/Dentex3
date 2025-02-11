@@ -7,10 +7,11 @@
     android:layout_height="match_parent"
     android:background="#123564"
     android:orientation="vertical"
-    tools:context=".Entry.Splash">
+    tools:context=".view.Splash">
 
     <VideoView
         android:id="@+id/VideoV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:backgroundTint="#123564"/>
 </LinearLayout>

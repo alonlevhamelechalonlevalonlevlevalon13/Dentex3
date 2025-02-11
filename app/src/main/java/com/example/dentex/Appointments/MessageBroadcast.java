@@ -11,7 +11,7 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.example.dentex.Patient.PatientActivity;
+import com.example.dentex.view.PatientActivity;
 import com.example.dentex.R;
 
 public class MessageBroadcast extends BroadcastReceiver {

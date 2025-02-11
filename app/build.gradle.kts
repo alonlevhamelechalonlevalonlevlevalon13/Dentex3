@@ -47,4 +47,9 @@ dependencies {
 //    implementation("com.google.firebase:firebase-messaging:23.1.0")
     implementation(libs.firebase.ui.firestore)
     implementation (libs.material.v121)
+    implementation ("androidx.work:work-runtime:2.7.1") // WorkManager dependency
+    implementation ("androidx.core:core:1.6.0") // For NotificationManager
+    implementation ("androidx.appcompat:appcompat:1.3.0") // For AppCompat (if needed)
+    implementation ("com.google.guava:guava:30.1-jre") // Add this line
+    implementation ("androidx.work:work-runtime:2.7.1")
 }

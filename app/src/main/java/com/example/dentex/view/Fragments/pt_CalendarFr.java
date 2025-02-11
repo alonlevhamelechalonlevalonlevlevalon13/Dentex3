@@ -1,11 +1,10 @@
-package com.example.dentex.Patient;
+package com.example.dentex.view.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dentex.Appointments.Appointment;
 import com.example.dentex.Appointments.AppointmentHelper;
-import com.example.dentex.Appointments.PtCalendarAdapter;
 import com.example.dentex.FireBase.FBUserHelper;
 import com.example.dentex.R;
+import com.example.dentex.view.Adapters.PtCalendarAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 

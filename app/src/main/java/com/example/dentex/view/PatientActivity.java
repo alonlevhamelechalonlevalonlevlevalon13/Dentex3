@@ -1,22 +1,25 @@
-package com.example.dentex.Patient;
-
-import static com.example.dentex.FireBase.FBUserHelper.db;
+package com.example.dentex.view;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.Appointments.AppointmentHelper;
 import com.example.dentex.R;
+import com.example.dentex.view.Fragments.pt_CalendarFr;
+import com.example.dentex.view.Fragments.pt_home_fr;
+import com.example.dentex.view.Fragments.pt_newAppointment_fr;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class PatientActivity extends AppCompatActivity {
@@ -51,6 +54,21 @@ TextView tv;
                 return false;
             }
         });
+        Date appointmentDate = new Date(System.currentTimeMillis() + 10000); // Appointment 1 minute from now
+        Appointment appointment = new Appointment(appointmentDate, "sahddj", "sadh");
+        AppointmentHelper.addAppointmentToUser(appointment, new AppointmentHelper.AddAppointmentCallback() {
+            @Override
+            public void onAppointmentAdded(String appointmentId) {
+                AppointmentHelper.scheduleNotification(getApplicationContext(),appointment);
+                Toast.makeText(PatientActivity.this, "TOASTTTT!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAppointmentError(Exception e) {
+
+            }
+        });
+
     }
 
 

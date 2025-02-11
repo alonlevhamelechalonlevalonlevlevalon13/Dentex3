@@ -12,9 +12,6 @@ public class Appointment{
     public String drname;
     public String treatmentType;
 
-    @Exclude
-    private AlarmManager alarmManager;
-
     public Appointment(Date date, String Drname, String treatmentType) {
         this.date = date;
         this.drname = Drname;
@@ -47,13 +44,4 @@ public class Appointment{
         this.date = date;
     }
 
-    @Exclude
-    public AlarmManager getAlarmManager() {
-        return alarmManager;
-    }
-
-    @Exclude
-    public void setAlarmManager(AlarmManager alarmManager) {
-        this.alarmManager = alarmManager;
-    }
 }

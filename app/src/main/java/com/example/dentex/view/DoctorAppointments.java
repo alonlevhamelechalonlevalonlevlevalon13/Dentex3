@@ -1,4 +1,4 @@
-package com.example.dentex.Doctors;
+package com.example.dentex.view;
 
 import static android.content.ContentValues.TAG;
 import static com.example.dentex.FireBase.FBUserHelper.db;

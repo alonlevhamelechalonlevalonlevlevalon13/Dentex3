@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#123564"
     android:orientation="vertical"
-    tools:context=".Patient.pt_newAppointment_fr">
+    tools:context=".view.Fragments.pt_newAppointment_fr">
 
     <LinearLayout
         android:layout_width="match_parent"
