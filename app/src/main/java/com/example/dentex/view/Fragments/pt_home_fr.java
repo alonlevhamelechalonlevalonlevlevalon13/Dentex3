@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.dentex.R;
-import com.example.dentex.view.Login;
+import com.example.dentex.view.LoginActivity;
 
 public class pt_home_fr extends Fragment {
 
@@ -48,12 +48,12 @@ public class pt_home_fr extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Button b = view.findViewById(R.id.button2);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button BtnLogOut = view.findViewById(R.id.button2);
+        BtnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                startActivity(new Intent(getContext(), Login.class));
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
         // Inflate the layout for this fragment

@@ -21,12 +21,12 @@ import com.example.dentex.view.PatientActivity;
 public class pt_newAppointment_fr extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static String treatmentType = "All";
+    public static String treatmentType;
     public static String drName;
     private Activity activity;
     private Button buttonDoc;
     private Button buttonTreat;
-    private Button button1;
+    private Button buttonSearch;
     private String mParam1;
     private String mParam2;
 
@@ -63,8 +63,8 @@ public class pt_newAppointment_fr extends Fragment {
         buttonDoc = view.findViewById(R.id.buttonDoc);
         buttonDoc.setEnabled(false);
         buttonTreat = view.findViewById(R.id.button);
-        button1 = view.findViewById(R.id.buttonSubmit2);
-        button1.setOnClickListener(new View.OnClickListener() {
+        buttonSearch = view.findViewById(R.id.buttonSubmit2);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (activity instanceof PatientActivity){
@@ -75,13 +75,38 @@ public class pt_newAppointment_fr extends Fragment {
         buttonTreat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create a PopupMenu
                 PopupMenu popupMenu = new PopupMenu(getContext(), v);
 
-                // Inflate the menu (from a resource file)
-                popupMenu.getMenuInflater().inflate(R.menu.select_treatment, popupMenu.getMenu());
 
-                // Set item click listener
+                popupMenu.getMenuInflater().inflate(R.menu.select_treatment, popupMenu.getMenu());
+                MenuItem בדיקה = popupMenu.getMenu().findItem(R.id.option1);
+                MenuItem עקירה = popupMenu.getMenu().findItem(R.id.option2);
+                MenuItem סתימה = popupMenu.getMenu().findItem(R.id.option3);
+                MenuItem ניקוי = popupMenu.getMenu().findItem(R.id.option4);
+                MenuItem טיפול_שורש = popupMenu.getMenu().findItem(R.id.option5);
+                בדיקה.setEnabled(false);
+                עקירה.setEnabled(false);
+                סתימה.setEnabled(false);
+                ניקוי.setEnabled(false);
+                טיפול_שורש.setEnabled(false);
+                invalidateOptionsMenu(getActivity());
+                if (drName.equals(null)) {
+                    בדיקה.setEnabled(true);
+                    עקירה.setEnabled(true);
+                    סתימה.setEnabled(true);
+                    ניקוי.setEnabled(true);
+                    טיפול_שורש.setEnabled(true);
+                }
+                if (drName.equals("דור איינס") || drName.equals("סיוון שפיר")) {
+                    בדיקה.setEnabled(true);
+                    סתימה.setEnabled(true);
+                } else if (drName.equals("נופר לוי")) {
+                    ניקוי.setEnabled(true);
+                } else if (drName.equals("גיא נבון")) {
+                    טיפול_שורש.setEnabled(true);
+                } else if (drName.equals("גל הרמן")) {
+                    עקירה.setEnabled(true);
+                }
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -122,7 +147,7 @@ public class pt_newAppointment_fr extends Fragment {
         sivan.setEnabled(false);
         nofar.setEnabled(false);
         invalidateOptionsMenu(getActivity());
-        if (treatmentType.equals("All")) {
+        if (treatmentType.equals(null)) {
             dor.setEnabled(true);
             guy.setEnabled(true);
             gal.setEnabled(true);

@@ -24,14 +24,13 @@ import java.util.Date;
 
 public class PatientActivity extends AppCompatActivity {
 BottomNavigationView bottomNavigationView;
-TextView tv;
+TextView titleText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_patient);
-        createChannel();
-        tv=findViewById(R.id.Tv1);
+        titleText=findViewById(R.id.Tv1);
         replaceFragment(new pt_home_fr());
         bottomNavigationView = findViewById(R.id.bNav);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -40,15 +39,15 @@ TextView tv;
                 switch (item.getTitle().toString()) {
                     case "כל התורים":
                         replaceFragment(new pt_CalendarFr());
-                        tv.setText("כל התורים");
+                        titleText.setText("כל התורים");
                         return true;
                     case "תור חדש":
-                        tv.setText("בחר סוג טיפול ורופא");
+                        titleText.setText("בחר סוג טיפול ורופא");
                         replaceFragment(new pt_newAppointment_fr(PatientActivity.this));
                         return true;
                     case "דף הבית":
                         replaceFragment(new pt_home_fr());
-                        tv.setText("דף הבית");
+                        titleText.setText("דף הבית");
                         return true;
                 }
                 return false;
@@ -70,19 +69,6 @@ TextView tv;
         });
 
     }
-
-
-    private void createChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "ReminderChannel";
-            String description = "Channel for reminder notifications";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("REMINDER_CHANNEL", name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);}
-    }
-
     public void replaceFragment(Fragment fragment)
     {
         androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();

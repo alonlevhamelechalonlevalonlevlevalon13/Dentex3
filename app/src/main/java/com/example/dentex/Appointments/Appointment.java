@@ -1,21 +1,28 @@
 package com.example.dentex.Appointments;
 
-import android.app.AlarmManager;
+import androidx.work.OneTimeWorkRequest;
 
-import com.google.firebase.firestore.Exclude;
-
-import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 public class Appointment{
     public Date date;
     public String drname;
     public String treatmentType;
+    public UUID alarm;
 
     public Appointment(Date date, String Drname, String treatmentType) {
         this.date = date;
         this.drname = Drname;
         this.treatmentType = treatmentType;
+    }
+
+    public UUID getAlarm() {
+        return alarm;
+    }
+
+    public void setAlarm(UUID alarm) {
+        this.alarm = alarm;
     }
 
     public String getDrname() {

@@ -1,6 +1,6 @@
 package com.example.dentex.view.Fragments;
 
-import static com.example.dentex.FireBase.FBUserHelper.db;
+import static com.example.dentex.FireBase.FBUserHelper.DataBase;
 import static com.example.dentex.view.Fragments.pt_newAppointment_fr.drName;
 import static com.example.dentex.view.Fragments.pt_newAppointment_fr.treatmentType;
 
@@ -27,7 +27,6 @@ import java.util.Date;
 public class pt_Appoints_fr extends Fragment{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    PtCalendarAdapter adapter;
     private String mParam1;
     private String mParam2;
     Query query;
@@ -58,10 +57,9 @@ public class pt_Appoints_fr extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pt_appoints, container, false);
-        Context context = requireContext();  // or getContext() if you're certain it's not null
+        Context context = getContext();
         PtFreeAppointmentAdapter itemAdapter = new PtFreeAppointmentAdapter(context, options());
         recyclerView = view.findViewById(R.id.Appointments);
-        // Check if recyclerView is valid before using it
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(itemAdapter);
@@ -72,14 +70,16 @@ public class pt_Appoints_fr extends Fragment{
 
     private FirestoreRecyclerOptions<Appointment> options() {
         if (drName==null||treatmentType==null){
-             query = db.collection("openappointments")
+             query = DataBase.collection("openappointments")
                     .whereGreaterThan("date", new Date())
                     .orderBy("date", Query.Direction.ASCENDING);
-        }else { query = db.collection("openappointments")
+        } else {
+            query = DataBase.collection("openappointments")
                 .whereGreaterThan("date", new Date())
                 .whereEqualTo("drname", drName)
                 .whereEqualTo("treatmentType", treatmentType)
-                .orderBy("date", Query.Direction.ASCENDING);}
+                .orderBy("date", Query.Direction.ASCENDING);
+        }
         FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)
                 .build();

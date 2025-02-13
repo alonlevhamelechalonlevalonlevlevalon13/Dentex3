@@ -18,16 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FBUserHelper.FBReply {
+public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBReply, FBUserHelper.FBReply {
     private FirebaseAuth mAuth;
     private static final String TAG = "alon";
-    private String email = "alonlevalon@gmail.com";
-    private String pass = "alon0312";
-    private EditText EtE;
-    private EditText EtP;
-    private EditText EtP2;
-    private Button BtnL;
-    private Button BtnS;
+    private EditText EtEmail;
+    private EditText EtPassword;
+    private Button BtnLogIn;
+    private Button BtnSignUp;
     private FBAuthHelper fbAuthHelper;///
 
     @Override
@@ -42,23 +39,23 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
             else
                 startActivity(new Intent(this, PatientActivity.class));
         }
-        EtE = findViewById(R.id.ETE);
-        EtP = findViewById(R.id.ETP);
-        BtnS = findViewById(R.id.BtnS);
-        BtnL = findViewById(R.id.BtnL);
-        BtnS.setOnClickListener(new View.OnClickListener() {
+        EtEmail = findViewById(R.id.ETE);
+        EtPassword = findViewById(R.id.ETP);
+        BtnSignUp = findViewById(R.id.BtnS);
+        BtnLogIn = findViewById(R.id.BtnL);
+        BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login.this, RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-        BtnL.setOnClickListener(new View.OnClickListener() {
+        BtnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkEmailValidity(EtE.getText().toString()) && checkPasswordValidity(EtP.getText().toString(), EtP.getText().toString())) {
-                    fbAuthHelper.login(EtE.getText().toString(), EtP.getText().toString());
+                if (checkEmailValidity(EtEmail.getText().toString()) && checkPasswordValidity(EtPassword.getText().toString())) {
+                    fbAuthHelper.login(EtEmail.getText().toString(), EtPassword.getText().toString());
                 } else {
-                    Toast.makeText(Login.this, "שגיאת התחברות", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "שגיאת התחברות", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -70,24 +67,24 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
 
     }
 
-    private boolean checkPasswordValidity(String password, String confirm) {
-        if (password.length() >= 6 && password.equals(confirm)) {
+    private boolean checkPasswordValidity(String password) {
+        if (password.length() >= 6) {
             // Password is valid
             return true;
         } else {
             // Password is invalid, show an error message
-            EtP.setError("Password must be 6 characters or longer");
+            EtPassword.setError("Password must be 6 characters or longer");
             return false;
         }
     }
 
     private boolean checkEmailValidity(String email) {
-        if (EtE != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (EtEmail != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // Email is valid
             return true;
         } else {
             // Email is invalid, show an error message
-            EtE.setError("Invalid email address");
+            EtEmail.setError("Invalid email address");
             return false;
         }
     }
@@ -99,7 +96,6 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
 
     @Override
     public void loginSuccess(FirebaseUser user) {
-        FBUserHelper fbUserHelper = new FBUserHelper(this);
         if(user.getEmail().equals("manager123@gmail.com"))
             startActivity(new Intent(this, DoctorAppointments.class));
         else
@@ -107,7 +103,7 @@ public class Login extends AppCompatActivity implements FBAuthHelper.FBReply, FB
     }
 
     public void createUserFail() {
-        Toast.makeText(Login.this, "יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
+        Toast.makeText(LoginActivity.this, "יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
     }
 
     @Override

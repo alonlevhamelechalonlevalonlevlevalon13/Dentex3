@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#123564"
     android:orientation="vertical"
-    tools:context=".view.Splash">
+    tools:context=".view.SplashActivity">
 
     <VideoView
         android:id="@+id/VideoV"

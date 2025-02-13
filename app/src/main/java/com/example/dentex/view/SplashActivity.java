@@ -14,7 +14,7 @@ import com.example.dentex.R;
 
 import android.widget.VideoView;
 
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
         public static int SPLASH_TIME_OUT=1700;
 
         @Override
@@ -31,7 +31,7 @@ public class Splash extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent= new Intent(getApplicationContext(),Login.class);
+                    Intent intent= new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }

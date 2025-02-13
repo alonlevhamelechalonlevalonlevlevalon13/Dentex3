@@ -1,7 +1,7 @@
 package com.example.dentex.view;
 
 import static android.content.ContentValues.TAG;
-import static com.example.dentex.FireBase.FBUserHelper.db;
+import static com.example.dentex.FireBase.FBUserHelper.DataBase;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -32,15 +32,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class DoctorAppointments extends AppCompatActivity implements
-        View.OnClickListener, FBUserHelper.FBReply {
+public class DoctorAppointments extends AppCompatActivity implements View.OnClickListener{
 
-    Button btnDatePicker, button4;
+    Button btnDatePicker, buttonSubmit;
     EditText name, treatment;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    private int currentYear, currentMonth, currentDay, currentHour, currentMinute;
     private int Year1, Month1, Day1;
     private Date date;
-    private User user1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +46,10 @@ public class DoctorAppointments extends AppCompatActivity implements
         setContentView(R.layout.activity_doctor_appointments);
         btnDatePicker=findViewById(R.id.button6);
         btnDatePicker.setOnClickListener(this);
-        button4 = findViewById(R.id.button4);
+        buttonSubmit = findViewById(R.id.button4);
         name = findViewById(R.id.editTextText);
         treatment = findViewById(R.id.editTextText2);
-        button4.setOnClickListener(this);
-        FBUserHelper fbUserHelper = new FBUserHelper(this);
-        fbUserHelper.getOne(FBAuthHelper.getCurrentUser().getUid());
+        buttonSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -63,9 +59,9 @@ public class DoctorAppointments extends AppCompatActivity implements
 
             // Get Current Date
             final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+            currentYear = c.get(Calendar.YEAR);
+            currentMonth = c.get(Calendar.MONTH);
+            currentDay = c.get(Calendar.DAY_OF_MONTH);
             
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
@@ -79,38 +75,28 @@ public class DoctorAppointments extends AppCompatActivity implements
                             setTime();
 
                         }
-                    }, mYear, mMonth, mDay);
+                    }, currentYear, currentMonth, currentDay);
             datePickerDialog.show();
         }
-        if (v == button4){
+        if (v == buttonSubmit){
             if (date==null || name==null || treatment==null)
                 Toast.makeText(this, "בבקשה מלא/י את כל השדות", Toast.LENGTH_SHORT).show();
             else {
-                db.collection("openappointments").
+                DataBase.collection("openappointments").
                         add(new Appointment(date, name.getText().toString(), treatment.getText().toString()))
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
-                                Log.d(TAG, "onComplete: "+task.toString());
-                                Log.d(TAG, "onComplete: "+task.toString());
-                                Log.d(TAG, "onComplete: "+task.toString());
-                                Log.d(TAG, "onComplete: "+task.toString());
-                                Log.d(TAG, "onComplete: "+task.toString());
-                                Log.d(TAG, "onComplete: "+task.toString());
-
+                                Toast.makeText(DoctorAppointments.this, "התור נוסף בהצלחה", Toast.LENGTH_SHORT).show();
                             }
                         });
-                Toast.makeText(this, "התור נוסף בהצלחה", Toast.LENGTH_SHORT).show();
             }
         }
-
-            // Get Current Time
-
     }
     private void setTime(){
         final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        currentHour = c.get(Calendar.HOUR_OF_DAY);
+        currentMinute = c.get(Calendar.MINUTE);
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
@@ -123,60 +109,9 @@ public class DoctorAppointments extends AppCompatActivity implements
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
                         btnDatePicker.setText(dateFormat.format(date));
                     }
-                }, mHour, mMinute, false);
+                }, currentHour, currentMinute, true);
         timePickerDialog.show();
     }
 
-    @Override
-    public void getAllSuccess(ArrayList<User> users) {
 
-    }
-
-    @Override
-    public void getOneSuccess(User user) {
-        user1 = user;
-    }
-
-    @Override
-    public void addUserSuccess(String id) {
-
-    }
 }
-//        extends AppCompatActivity implements FBUserHelper.FBReply {
-//    FBUserHelper fbUserHelper;
-//    User user1;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_doctor_appointments);
-//        Button buttonGen = findViewById(R.id.buttonGenerate);
-//        fbUserHelper = new FBUserHelper(this);
-//        fbUserHelper.getOne(FBAuthHelper.getCurrentUser().getUid());
-//        buttonGen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Calendar calendar = Calendar.getInstance();
-//                calendar.add(Calendar.DAY_OF_MONTH,7);
-//                Date date;
-//                for (int i = 0; i < 10; i++) {
-//                    calendar.add(Calendar.MINUTE,30);
-//                    date=calendar.getTime();
-//
-//                    db.collection("openappointments").
-//                            add(new Appointment(date, user1.getName(), "fbdsTODO"));
-//                }
-//            }
-//
-//        });
-//    }
-//
-//    @Override
-//    public void getAllSuccess(ArrayList<User> users) {}
-//
-//    @Override
-//    public void getOneSuccess(User user) {
-//        user1 = user;
-//    }
-//
-//    @Override
-//    public void addUserSuccess(String id) {}

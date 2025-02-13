@@ -1,16 +1,8 @@
 package com.example.dentex.Appointments;
 
-import static androidx.core.app.ActivityCompat.requestPermissions;
-
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.metrics.Event;
-import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -18,7 +10,6 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.example.dentex.FireBase.FBAuthHelper;
-import com.example.dentex.NotificationWorker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +21,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -108,17 +98,14 @@ public class AppointmentHelper {
                 .setInitialDelay(delay, TimeUnit.MILLISECONDS) // Delay the execution until the appointment time
                 .setInputData(inputData)
                 .build();
-
+        appointment.setAlarm(workRequest.getId());
         // Enqueue the work request with WorkManager
         WorkManager.getInstance(context).enqueue(workRequest);
     }
 
     public static void stopAlarm(Context context, Appointment appointment){//ביטול ההתראה - חלק מביטול התור
-        Intent myIntent = new Intent(context, MessageBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-        if (appointment.getAlarmManager()!= null)
-            appointment.getAlarmManager().cancel(pendingIntent);
-
+        if (appointment.getAlarm()!= null)
+            WorkManager.getInstance(context).cancelWorkById(appointment.getAlarm());
     }
 
     public static void addAppointmentToUser( Appointment appointment, AddAppointmentCallback callback) { // הוספת תור למערך של המשתמש המחובר

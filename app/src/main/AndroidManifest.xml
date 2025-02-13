@@ -24,13 +24,8 @@
             android:name=".view.DoctorAppointments"
             android:exported="false" />
 
-        <receiver
-            android:name=".Appointments.MessageBroadcast"
-            android:enabled="true"
-            android:exported="false" />
-
         <activity
-            android:name=".view.Login"
+            android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".view.RegisterActivity"
@@ -39,7 +34,7 @@
             android:name=".view.PatientActivity"
             android:exported="false" />
         <activity
-            android:name=".view.Splash"
+            android:name=".view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

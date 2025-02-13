@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class FBUserHelper {
     private static final String TAG = "FireStoreHelper Tag";
-    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static FirebaseFirestore DataBase = FirebaseFirestore.getInstance();
     private static FBUserHelper.FBReply fbReply;
     private static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    private static CollectionReference collectionRef = db.collection("users");
-    private static CollectionReference collectionRefAppo = db.collection("users").document(currentUser.getUid()).collection("appointments");
+    private static CollectionReference collectionRef = DataBase.collection("users");
+    private static CollectionReference collectionRefAppointment = DataBase.collection("users").document(currentUser.getUid()).collection("appointments");
 
     public interface FBReply {
         void getAllSuccess(ArrayList<User> users);
@@ -86,6 +86,6 @@ public class FBUserHelper {
         return collectionRef;
     }
     public static CollectionReference getCollectionRefAppo() {
-        return collectionRefAppo;
+        return collectionRefAppointment;
     }
 }

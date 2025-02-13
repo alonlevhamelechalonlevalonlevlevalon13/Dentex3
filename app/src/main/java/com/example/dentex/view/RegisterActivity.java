@@ -23,12 +23,12 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     private FirebaseAuth mAuth;
     private static final String TAG = "alon";
     private String email = "alonlevalon@gmail.com";
-    private String pass = "alon0312";
-    private EditText EtE;
-    private EditText EtP;
-    private EditText EtP2;
-    private EditText ETN;
-    private Button BtnS;
+    private String password = "alon0312";
+    private EditText EtEmail;
+    private EditText EtPassword;
+    private EditText EtConfirm;
+    private EditText EtName;
+    private Button BtnSignUp;
     private FBAuthHelper fbAuthHelper;///
     private FBUserHelper fsUserHelper;
 
@@ -38,19 +38,18 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
         setContentView(R.layout.activity_register);
         fbAuthHelper = new FBAuthHelper(this, this);
         //fsUserHelper = new FBUserHelper( this);
-        EtE = findViewById(R.id.ETE2);
-        EtP = findViewById(R.id.ETP3);
-        ETN = findViewById(R.id.ETN);
-        EtP2 = findViewById(R.id.ETP4);
-        BtnS = findViewById(R.id.btnS);
-        BtnS.setOnClickListener(new View.OnClickListener() {
+        EtEmail = findViewById(R.id.ETE2);
+        EtPassword = findViewById(R.id.ETP3);
+        EtName = findViewById(R.id.ETN);
+        EtConfirm = findViewById(R.id.ETP4);
+        BtnSignUp = findViewById(R.id.btnS);
+        BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( checkEmailValidity(EtE.getText().toString()) && checkPasswordValidity(EtP.getText().toString(), EtP2.getText().toString()) && ETN.getText().toString()!=null){
-                    email = EtE.getText().toString();
-                    pass = EtP.getText().toString();
-                    fbAuthHelper.createUser(email, pass);
+                if( checkEmailValidity(EtEmail.getText().toString()) && checkPasswordValidity(EtPassword.getText().toString(), EtConfirm.getText().toString()) && EtName.getText().toString()!=null){
+                    fbAuthHelper.createUser(EtEmail.getText().toString(), EtPassword.getText().toString());
                 }
+                else Toast.makeText(RegisterActivity.this, "שגיאה ביצירת המשתמש", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -65,26 +64,25 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
             return true;
         } else {
             // Password is invalid, show an error message
-            EtP.setError("Password must be 6 characters or longer");
+            EtPassword.setError("Password must be 6 characters or longer");
             return false;
         }
     }
     private boolean checkEmailValidity(String email) {
-        if (EtE != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (EtEmail != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // Email is valid
             return true;
         } else {
             // Email is invalid, show an error message
-            EtE.setError("Invalid email address");
+            EtEmail.setError("Invalid email address");
             return false;
         }
     }
     @Override
     public void createUserSuccess(FirebaseUser user) {
-        User user1 = new User(ETN.getText().toString());
+        User user1 = new User(EtName.getText().toString());
         FBUserHelper fbUserHelper = new FBUserHelper(this);
         fbUserHelper.add(user1);
-        Toast.makeText(this, "creating user...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
