@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.Appointments.AppointmentHelper;
-import com.example.dentex.FireBase.FBUserHelper;
+import com.example.dentex.model.Appointment;
+import com.example.dentex.utils.AppointmentHelper;
+import com.example.dentex.utils.FBUserHelper;
 import com.example.dentex.R;
 import com.example.dentex.view.Adapters.PtCalendarAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;

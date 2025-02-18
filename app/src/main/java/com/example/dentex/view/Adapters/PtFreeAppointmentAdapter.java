@@ -1,5 +1,5 @@
 package com.example.dentex.view.Adapters;
-import static com.example.dentex.FireBase.FBUserHelper.DataBase;
+import static com.example.dentex.utils.FBUserHelper.DataBase;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.Appointments.AppointmentHelper;
+import com.example.dentex.model.Appointment;
+import com.example.dentex.utils.AppointmentHelper;
 import com.example.dentex.R;
 
 import java.text.SimpleDateFormat;

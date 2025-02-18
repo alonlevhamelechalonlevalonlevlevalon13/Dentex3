@@ -1,12 +1,13 @@
 package com.example.dentex.view;
 
-import static android.content.ContentValues.TAG;
-import static com.example.dentex.FireBase.FBUserHelper.DataBase;
+import static com.example.dentex.utils.FBAuthHelper.mAuth;
+import static com.example.dentex.utils.FBUserHelper.DataBase;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,24 +18,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.FireBase.FBAuthHelper;
-import com.example.dentex.FireBase.FBUserHelper;
-import com.example.dentex.FireBase.User;
+import com.example.dentex.model.Appointment;
 import com.example.dentex.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class DoctorAppointments extends AppCompatActivity implements View.OnClickListener{
 
-    Button btnDatePicker, buttonSubmit;
+    Button btnDatePicker, buttonSubmit, btnLogOut;
     EditText name, treatment;
     private int currentYear, currentMonth, currentDay, currentHour, currentMinute;
     private int Year1, Month1, Day1;
@@ -50,6 +47,8 @@ public class DoctorAppointments extends AppCompatActivity implements View.OnClic
         name = findViewById(R.id.editTextText);
         treatment = findViewById(R.id.editTextText2);
         buttonSubmit.setOnClickListener(this);
+        btnLogOut = findViewById(R.id.button5);
+        btnLogOut.setOnClickListener(this);
     }
 
     @Override
@@ -92,6 +91,29 @@ public class DoctorAppointments extends AppCompatActivity implements View.OnClic
                         });
             }
         }
+        if (v==btnLogOut){
+            setupDialog();
+        }
+    }
+    private void setupDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("האם אתה בטוח?")
+                .setMessage("אתה בטוח שאתה רוצה להתנתק?")
+                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle "Yes" action
+                        mAuth.signOut();
+                    }
+                })
+                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
     private void setTime(){
         final Calendar c = Calendar.getInstance();

@@ -1,4 +1,4 @@
-package com.example.dentex.FireBase;
+package com.example.dentex.utils;
 
 import android.app.Activity;
 import android.util.Log;

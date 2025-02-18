@@ -74,12 +74,21 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:gravity="bottom"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+            android:text="התנתקות"
+            android:textColor="#FF0000" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="פרסם תור" />
 
     </LinearLayout>

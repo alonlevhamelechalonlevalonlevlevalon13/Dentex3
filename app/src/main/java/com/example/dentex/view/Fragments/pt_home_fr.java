@@ -1,7 +1,9 @@
 package com.example.dentex.view.Fragments;
 
-import static com.example.dentex.FireBase.FBAuthHelper.mAuth;
+import static com.example.dentex.utils.FBAuthHelper.mAuth;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,11 +54,31 @@ public class pt_home_fr extends Fragment {
         BtnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
+                setupDialog();
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
         // Inflate the layout for this fragment
         return view;
+    }
+    private void setupDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("האם אתה בטוח?")
+                .setMessage("אתה בטוח שאתה רוצה להתנתק?")
+                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle "Yes" action
+                        mAuth.signOut();
+                    }
+                })
+                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 }

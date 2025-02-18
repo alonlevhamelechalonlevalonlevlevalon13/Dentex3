@@ -1,15 +1,14 @@
-package com.example.dentex.Appointments;
+package com.example.dentex.utils;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.example.dentex.FireBase.FBAuthHelper;
+import com.example.dentex.controller.NotificationWorker;
+import com.example.dentex.model.Appointment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

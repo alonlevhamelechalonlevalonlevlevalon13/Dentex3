@@ -1,6 +1,4 @@
-package com.example.dentex.Appointments;
-
-import androidx.work.OneTimeWorkRequest;
+package com.example.dentex.model;
 
 import java.util.Date;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.example.dentex.view.Fragments;
 
-import static com.example.dentex.FireBase.FBUserHelper.DataBase;
+import static com.example.dentex.utils.FBUserHelper.DataBase;
 import static com.example.dentex.view.Fragments.pt_newAppointment_fr.drName;
 import static com.example.dentex.view.Fragments.pt_newAppointment_fr.treatmentType;
 
@@ -15,9 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.dentex.Appointments.Appointment;
+import com.example.dentex.model.Appointment;
 import com.example.dentex.R;
-import com.example.dentex.view.Adapters.PtCalendarAdapter;
 import com.example.dentex.view.Adapters.PtFreeAppointmentAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;

@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.dentex.FireBase.FBAuthHelper;
-import com.example.dentex.FireBase.FBUserHelper;
-import com.example.dentex.FireBase.User;
+import com.example.dentex.utils.FBAuthHelper;
+import com.example.dentex.utils.FBUserHelper;
+import com.example.dentex.model.User;
 import com.example.dentex.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

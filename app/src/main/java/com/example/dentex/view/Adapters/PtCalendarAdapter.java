@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dentex.Appointments.Appointment;
-import com.example.dentex.Appointments.AppointmentHelper;
+import com.example.dentex.model.Appointment;
+import com.example.dentex.utils.AppointmentHelper;
 import com.example.dentex.R;
 
 import java.text.SimpleDateFormat;

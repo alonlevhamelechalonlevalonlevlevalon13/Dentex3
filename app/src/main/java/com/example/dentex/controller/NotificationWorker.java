@@ -1,4 +1,4 @@
-package com.example.dentex.Appointments;
+package com.example.dentex.controller;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

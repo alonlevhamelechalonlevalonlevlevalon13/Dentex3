@@ -1,7 +1,8 @@
-package com.example.dentex.FireBase;
+package com.example.dentex.utils;
 
 import android.util.Log;
 
+import com.example.dentex.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;

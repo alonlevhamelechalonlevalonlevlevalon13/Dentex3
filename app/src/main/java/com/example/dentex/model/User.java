@@ -1,9 +1,6 @@
-package com.example.dentex.FireBase;
-
-import com.example.dentex.Appointments.Appointment;
+package com.example.dentex.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class User {
     String name;
