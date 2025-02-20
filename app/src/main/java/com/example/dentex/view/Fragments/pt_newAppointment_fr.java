@@ -79,33 +79,33 @@ public class pt_newAppointment_fr extends Fragment {
 
 
                 popupMenu.getMenuInflater().inflate(R.menu.select_treatment, popupMenu.getMenu());
-                MenuItem בדיקה = popupMenu.getMenu().findItem(R.id.option1);
-                MenuItem עקירה = popupMenu.getMenu().findItem(R.id.option2);
-                MenuItem סתימה = popupMenu.getMenu().findItem(R.id.option3);
-                MenuItem ניקוי = popupMenu.getMenu().findItem(R.id.option4);
-                MenuItem טיפול_שורש = popupMenu.getMenu().findItem(R.id.option5);
-                בדיקה.setEnabled(false);
-                עקירה.setEnabled(false);
-                סתימה.setEnabled(false);
-                ניקוי.setEnabled(false);
-                טיפול_שורש.setEnabled(false);
+                MenuItem bdika = popupMenu.getMenu().findItem(R.id.option1);
+                MenuItem akira = popupMenu.getMenu().findItem(R.id.option2);
+                MenuItem stima = popupMenu.getMenu().findItem(R.id.option3);
+                MenuItem nikooy = popupMenu.getMenu().findItem(R.id.option4);
+                MenuItem tipool_shoresh = popupMenu.getMenu().findItem(R.id.option5);
+                bdika.setEnabled(false);
+                akira.setEnabled(false);
+                stima.setEnabled(false);
+                nikooy.setEnabled(false);
+                tipool_shoresh.setEnabled(false);
                 invalidateOptionsMenu(getActivity());
                 if (drName.equals(null)) {
-                    בדיקה.setEnabled(true);
-                    עקירה.setEnabled(true);
-                    סתימה.setEnabled(true);
-                    ניקוי.setEnabled(true);
-                    טיפול_שורש.setEnabled(true);
+                    bdika.setEnabled(true);
+                    akira.setEnabled(true);
+                    stima.setEnabled(true);
+                    nikooy.setEnabled(true);
+                    tipool_shoresh.setEnabled(true);
                 }
                 if (drName.equals("דור איינס") || drName.equals("סיוון שפיר")) {
-                    בדיקה.setEnabled(true);
-                    סתימה.setEnabled(true);
+                    bdika.setEnabled(true);
+                    stima.setEnabled(true);
                 } else if (drName.equals("נופר לוי")) {
-                    ניקוי.setEnabled(true);
+                    nikooy.setEnabled(true);
                 } else if (drName.equals("גיא נבון")) {
-                    טיפול_שורש.setEnabled(true);
+                    tipool_shoresh.setEnabled(true);
                 } else if (drName.equals("גל הרמן")) {
-                    עקירה.setEnabled(true);
+                    akira.setEnabled(true);
                 }
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
