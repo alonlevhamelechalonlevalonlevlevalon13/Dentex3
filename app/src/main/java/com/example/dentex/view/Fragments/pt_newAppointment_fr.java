@@ -90,14 +90,14 @@ public class pt_newAppointment_fr extends Fragment {
                 nikooy.setEnabled(false);
                 tipool_shoresh.setEnabled(false);
                 invalidateOptionsMenu(getActivity());
-                if (drName.equals(null)) {
+                if (drName == null) {
                     bdika.setEnabled(true);
                     akira.setEnabled(true);
                     stima.setEnabled(true);
                     nikooy.setEnabled(true);
                     tipool_shoresh.setEnabled(true);
                 }
-                if (drName.equals("דור איינס") || drName.equals("סיוון שפיר")) {
+                else if (drName.equals("דור איינס") || drName.equals("סיוון שפיר")) {
                     bdika.setEnabled(true);
                     stima.setEnabled(true);
                 } else if (drName.equals("נופר לוי")) {

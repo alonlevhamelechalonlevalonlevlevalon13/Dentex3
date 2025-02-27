@@ -55,7 +55,7 @@ public class pt_home_fr extends Fragment {
             @Override
             public void onClick(View v) {
                 setupDialog();
-                startActivity(new Intent(getContext(), LoginActivity.class));
+
             }
         });
         // Inflate the layout for this fragment
@@ -68,8 +68,8 @@ public class pt_home_fr extends Fragment {
                 .setPositiveButton("כן", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Handle "Yes" action
                         mAuth.signOut();
+                        startActivity(new Intent(getContext(), LoginActivity.class));
                     }
                 })
                 .setNegativeButton("לא", new DialogInterface.OnClickListener() {

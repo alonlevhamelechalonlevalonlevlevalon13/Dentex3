@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -104,6 +105,7 @@ public class DoctorAppointments extends AppCompatActivity implements View.OnClic
                     public void onClick(DialogInterface dialog, int which) {
                         // Handle "Yes" action
                         mAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     }
                 })
                 .setNegativeButton("לא", new DialogInterface.OnClickListener() {
