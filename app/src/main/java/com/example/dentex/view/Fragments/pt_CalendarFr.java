@@ -18,6 +18,7 @@ import com.example.dentex.view.Adapters.PtCalendarAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class pt_CalendarFr extends Fragment  {
     private FirestoreRecyclerOptions<Appointment> options() {
         //Query query = FBUserHelper.getCollectionRefAppo();
         Query query = FBUserHelper.getCollectionRefAppo()
-                .whereGreaterThan("date", new Date())
+                .whereGreaterThan("date", Calendar.getInstance().getTime())
                 .orderBy("date", Query.Direction.ASCENDING);
                 FirestoreRecyclerOptions<Appointment> options = new FirestoreRecyclerOptions.Builder<Appointment>()
                 .setQuery(query , Appointment.class)

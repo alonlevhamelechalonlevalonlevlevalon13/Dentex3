@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +47,8 @@ public class AppointmentHelper {
             String userId = currentUser.getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users").document(userId).collection("appointments")
-                    .orderBy("date", Query.Direction.ASCENDING) // Order by date
+                    .whereGreaterThan("date", new Date())
+                    .orderBy("date", Query.Direction.ASCENDING)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override

@@ -21,6 +21,7 @@ import com.example.dentex.view.Adapters.PtFreeAppointmentAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class pt_Appoints_fr extends Fragment{
@@ -70,7 +71,7 @@ public class pt_Appoints_fr extends Fragment{
     private FirestoreRecyclerOptions<Appointment> options() {
         if (drName==null||treatmentType==null){
              query = DataBase.collection("openappointments")
-                    .whereGreaterThan("date", new Date())
+                    .whereGreaterThan("date", Calendar.getInstance().getTime())
                     .orderBy("date", Query.Direction.ASCENDING);
         } else {
             query = DataBase.collection("openappointments")
