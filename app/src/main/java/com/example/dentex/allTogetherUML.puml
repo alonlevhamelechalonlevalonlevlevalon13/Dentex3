@@ -1,0 +1,88 @@
+@startuml
+
+' First Diagram: PatientActivity
+class PatientActivity {
+    - bottomNavigationView: BottomNavigationView [0..1]
+    - titleText: TextView [0..1]
+    + onCreate(savedInstanceState: Bundle)
+    + replaceFragment(fragment: Fragment)
+}
+
+' Second Diagram: pt_newAppointment_fr
+class pt_newAppointment_fr {
+    - activity: Activity [0..1]
+    - buttonDoc: Button [0..1]
+    - buttonSearch: Button [0..1]
+    - buttonTreat: Button [0..1]
+    - mParam1: String [0..1]
+    - mParam2: String [0..1]
+    + createDoctorPopup(v: View)
+    + newInstance(param1: String, param2: String): pt_newAppointment_fr
+    + onCreate(savedInstanceState: Bundle)
+    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
+}
+
+' Third Diagram: pt_home_fr
+class pt_home_fr {
+    - mParam1: String [0..1]
+    - mParam2: String [0..1]
+    + newInstance(param1: String, param2: String): pt_home_fr
+    + onCreate(savedInstanceState: Bundle)
+    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
+}
+
+' Fourth Diagram: pt_CalendarFr
+class pt_CalendarFr {
+    - param1: String [0..1]
+    - param2: String [0..1]
+    - recyclerView: RecyclerView [0..1]
+    + newInstance(param1: String, param2: String): pt_CalendarFr
+    + onCreate(savedInstanceState: Bundle)
+    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
+    + onViewCreated(view: View, savedInstanceState: Bundle)
+    - options(): FirestoreRecyclerOptions<Appointment>
+}
+
+' Fifth Diagram: pt_Appoints_fr
+class pt_Appoints_fr {
+    - mParam1: String [0..1]
+    - mParam2: String [0..1]
+    # query: Query [0..1]
+    - recyclerView: RecyclerView [0..1]
+    + newInstance(param1: String, param2: String): pt_Appoints_fr
+    + onCreate(savedInstanceState: Bundle)
+    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
+    + onViewCreated(view: View, savedInstanceState: Bundle)
+    - options(): FirestoreRecyclerOptions<Appointment>
+}
+class SplashActivity {
+    -SPLASH_TIME_OUT: 1700
+    + getUriFromRawFile(Context context,int rawResourceId)
+    + onCreate(savedInstanceState: Bundle)
+    + loading()
+}
+class RegisterActivity{
+-FirebaseAuth mAuth;
+-static final String TAG = "alon";
+-String email = "alonlevalon@gmail.com";
+-String password = "alon0312";
+-EditText EtEmail;
+-EditText EtPassword;
+-EditText EtConfirm;
+-EditText EtName;
+-Button BtnSignUp;
+-FBAuthHelper fbAuthHelper;
+-FBUserHelper fsUserHelper;
++onCreate(Bundle savedInstanceState)
++checkPasswordValidity(String password, String confirm)
++checkEmailValidity(String email)
++createUserSuccess(FirebaseUser user)
++createUserFail()
++addUserSuccess(String id)
+}
+PatientActivity --> pt_CalendarFr :manages
+PatientActivity --> pt_Appoints_fr :manages
+PatientActivity --> pt_home_fr :manages
+PatientActivity --> pt_newAppointment_fr :manages
+
+@enduml
