@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class FBAuthHelper {
-    public static FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+    public static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FBReply fbReply;
     private static final String TAG = "alon";
     Activity activity;
@@ -67,8 +67,5 @@ public class FBAuthHelper {
                         }
                     }
                 });
-    }
-    public void logout(){
-        mAuth.signOut();
     }
 }

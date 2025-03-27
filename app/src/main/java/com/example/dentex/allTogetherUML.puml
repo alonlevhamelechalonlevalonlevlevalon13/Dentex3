@@ -1,71 +1,45 @@
 @startuml
 
-' First Diagram: PatientActivity
 class PatientActivity {
-    - bottomNavigationView: BottomNavigationView [0..1]
-    - titleText: TextView [0..1]
-    + onCreate(savedInstanceState: Bundle)
-    + replaceFragment(fragment: Fragment)
+     BottomNavigationView bottomNavigationView
+     TextView titleText
+    + replaceFragment(Fragment fragment)
 }
 
-' Second Diagram: pt_newAppointment_fr
 class pt_newAppointment_fr {
-    - activity: Activity [0..1]
-    - buttonDoc: Button [0..1]
-    - buttonSearch: Button [0..1]
-    - buttonTreat: Button [0..1]
-    - mParam1: String [0..1]
-    - mParam2: String [0..1]
-    + createDoctorPopup(v: View)
-    + newInstance(param1: String, param2: String): pt_newAppointment_fr
-    + onCreate(savedInstanceState: Bundle)
-    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
+          +{static}String treatmentType
+          +{static}String drName
+          -Activity activity
+          -Button buttonDoc
+          -Button buttonTreat
+          -Button buttonSearch
+    -createDoctorPopup(View v)
 }
 
-' Third Diagram: pt_home_fr
 class pt_home_fr {
-    - mParam1: String [0..1]
-    - mParam2: String [0..1]
-    + newInstance(param1: String, param2: String): pt_home_fr
-    + onCreate(savedInstanceState: Bundle)
-    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
+    -setupDialog()
 }
 
-' Fourth Diagram: pt_CalendarFr
 class pt_CalendarFr {
-    - param1: String [0..1]
-    - param2: String [0..1]
-    - recyclerView: RecyclerView [0..1]
-    + newInstance(param1: String, param2: String): pt_CalendarFr
-    + onCreate(savedInstanceState: Bundle)
-    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
-    + onViewCreated(view: View, savedInstanceState: Bundle)
-    - options(): FirestoreRecyclerOptions<Appointment>
+    -RecyclerView recyclerView
+    -options()
 }
 
-' Fifth Diagram: pt_Appoints_fr
 class pt_Appoints_fr {
-    - mParam1: String [0..1]
-    - mParam2: String [0..1]
-    # query: Query [0..1]
-    - recyclerView: RecyclerView [0..1]
-    + newInstance(param1: String, param2: String): pt_Appoints_fr
-    + onCreate(savedInstanceState: Bundle)
-    + onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View
-    + onViewCreated(view: View, savedInstanceState: Bundle)
-    - options(): FirestoreRecyclerOptions<Appointment>
+    Query query
+    -RecyclerView recyclerView
+    -options()
 }
 class SplashActivity {
-    -SPLASH_TIME_OUT: 1700
+    +{static}SPLASH_TIME_OUT
     + getUriFromRawFile(Context context,int rawResourceId)
-    + onCreate(savedInstanceState: Bundle)
-    + loading()
+    + {static}loading()
 }
 class RegisterActivity{
 -FirebaseAuth mAuth;
--static final String TAG = "alon";
--String email = "alonlevalon@gmail.com";
--String password = "alon0312";
+-{static}String TAG
+-String email
+-String password
 -EditText EtEmail;
 -EditText EtPassword;
 -EditText EtConfirm;
@@ -73,12 +47,105 @@ class RegisterActivity{
 -Button BtnSignUp;
 -FBAuthHelper fbAuthHelper;
 -FBUserHelper fsUserHelper;
-+onCreate(Bundle savedInstanceState)
-+checkPasswordValidity(String password, String confirm)
-+checkEmailValidity(String email)
+-checkPasswordValidity(String password, String confirm)
+-checkEmailValidity(String email)
 +createUserSuccess(FirebaseUser user)
 +createUserFail()
 +addUserSuccess(String id)
+}
+class LoginActivity{
+    -EditText EtEmail;
+    -EditText EtPassword;
+    -Button BtnLogIn;
+    -Button BtnSignUp;
+    -FBAuthHelper fbAuthHelper;
+    -checkPasswordValidity(String password)
+    -checkEmailValidity(String email)
+    +loginSuccess(FirebaseUser user)
+}
+class DoctorAppointments{
+    Button btnDatePicker, buttonSubmit, btnLogOut;
+    EditText name, treatment;
+    -int currentYear, currentMonth, currentDay, currentHour, currentMinute;
+    -int Year1, Month1, Day1;
+    -Date date;
+    -setupDialog()
+    -setTime()
+}
+class PtFreeAppointmentAdapter{
+ -Context context;
+ -setupDialog(Appointment appointment, String id)
+ -performAddAction(Appointment appointment,String id)
+}
+class PtCalendarAdapter{
+-Context context;
+-setupDialog(Appointment appointment, String id)
+ -performDeleteAction(Appointment appointment,String id)
+}
+
+class FBUserHelper{
+    -{static}String TAG
+    +{static}FirebaseFirestore DataBase
+    -{static}FBUserHelper.FBReply fbReply;
+    -{static}FirebaseUser currentUser
+    -{static}CollectionReference collectionRef
+    -{static}CollectionReference collectionRefAppointment
+    +add(User user)
+    +update(String id, User user)
+}
+interface FBUserHelper:FBReply {
+    getAllSuccess(ArrayList<User> users);
+    getOneSuccess(User user);
+    addUserSuccess(String id);
+}
+class FBAuthHelper{
+    + {static} FirebaseAuth mAuth
+    - FBReply fbReply
+    - {static} String TAG
+    Activity activity
+    + {static} FirebaseUser getCurrentUser()
+    + boolean isLoggedIn()
+    + void createUser(String email, String password)
+    + void login(String email, String password)
+}
+ interface AppointmentsCallback {
+        List<Appointment> onAppointmentsLoaded(List<Appointment> appointments)
+        void onAppointmentsError(Exception e)
+}
+interface RemoveAppointmentsCallback {
+        void onAppointmentsRemoved()
+        void onAppointmentsError(Exception e)
+}
+
+interface AddAppointmentCallback {
+        void onAppointmentAdded(String appointmentId)
+        void onAppointmentError(Exception e)
+}
+interface FBAuthHelper:FBReply{
+        + void createUserSuccess(FirebaseUser user);
+        + void loginSuccess(FirebaseUser user);
+}
+class AppointmentHelper {
++ {static} void getUserAppointments(AppointmentsCallback callback)
++ {static} void scheduleNotification(Context context, Appointment appointment)
++ {static} void stopAlarm(Context context, Appointment appointment)
++ {static} void addAppointmentToUser( Appointment appointment, AddAppointmentCallback callback)
++ {static} void removeAppointment(String id, RemoveAppointmentsCallback callback)
+}
+class User {
+String name
+ArrayList<Appointment> appointments
+}
+class Appointment{
+    + Date date
+    + String drname
+    + String treatmentType
+    + UUID alarm
+}
+class NotificationWorker{
+- {static} String CHANNEL_ID
++ Result doWork()
+- void showNotification()
 }
 PatientActivity --> pt_CalendarFr :manages
 PatientActivity --> pt_Appoints_fr :manages

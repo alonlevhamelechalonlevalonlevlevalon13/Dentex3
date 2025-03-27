@@ -25,7 +25,6 @@ public class FBUserHelper {
 
     public FBUserHelper(FBUserHelper.FBReply fbReply) {
         this.fbReply = fbReply;
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public void add(User user) {

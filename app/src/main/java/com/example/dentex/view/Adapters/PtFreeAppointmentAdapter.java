@@ -46,7 +46,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                    @Override
                    public void onClick(DialogInterface dialog, int which) {
                        // Handle "Yes" action
-                       performAction(appointment,id);
+                       performAddAction(appointment,id);
                    }
                })
                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
@@ -60,7 +60,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                .show();
    }
 
-   private void performAction(Appointment appointment,String id) {
+   private void performAddAction(Appointment appointment,String id) {
        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
            @Override
@@ -72,7 +72,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                        DataBase.collection("openappointments")
                                .document(id)
                                .delete();
-                       Toast.makeText(context, "התוק נקבע בהצלחה", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(context, "התור נקבע בהצלחה", Toast.LENGTH_SHORT).show();
                    }
 
                    @Override

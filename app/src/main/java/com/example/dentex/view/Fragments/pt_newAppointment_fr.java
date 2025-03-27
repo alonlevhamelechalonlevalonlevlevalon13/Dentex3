@@ -32,7 +32,6 @@ public class pt_newAppointment_fr extends Fragment {
 
     public pt_newAppointment_fr() {
 
-
     }
     public pt_newAppointment_fr(Activity activity){
         this.activity = activity;

@@ -19,13 +19,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBReply, FBUserHelper.FBReply {
-    private FirebaseAuth mAuth;
-    private static final String TAG = "alon";
     private EditText EtEmail;
     private EditText EtPassword;
     private Button BtnLogIn;
     private Button BtnSignUp;
-    private FBAuthHelper fbAuthHelper;///
+    private FBAuthHelper fbAuthHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +98,6 @@ public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBR
             startActivity(new Intent(this, DoctorAppointments.class));
         else
             startActivity(new Intent(this, PatientActivity.class));
-    }
-
-    public void createUserFail() {
-        Toast.makeText(LoginActivity.this, "יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
     }
 
     @Override
