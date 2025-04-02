@@ -36,17 +36,17 @@ class SplashActivity {
     + {static}loading()
 }
 class RegisterActivity{
--FirebaseAuth mAuth;
+-FirebaseAuth mAuth
 -{static}String TAG
 -String email
 -String password
--EditText EtEmail;
--EditText EtPassword;
--EditText EtConfirm;
--EditText EtName;
--Button BtnSignUp;
--FBAuthHelper fbAuthHelper;
--FBUserHelper fsUserHelper;
+-EditText EtEmail
+-EditText EtPassword
+-EditText EtConfirm
+-EditText EtName
+-Button BtnSignUp
+-FBAuthHelper fbAuthHelper
+-FBUserHelper fsUserHelper
 -checkPasswordValidity(String password, String confirm)
 -checkEmailValidity(String email)
 +createUserSuccess(FirebaseUser user)
@@ -54,31 +54,31 @@ class RegisterActivity{
 +addUserSuccess(String id)
 }
 class LoginActivity{
-    -EditText EtEmail;
-    -EditText EtPassword;
-    -Button BtnLogIn;
-    -Button BtnSignUp;
-    -FBAuthHelper fbAuthHelper;
+    -EditText EtEmail
+    -EditText EtPassword
+    -Button BtnLogIn
+    -Button BtnSignUp
+    -FBAuthHelper fbAuthHelper
     -checkPasswordValidity(String password)
     -checkEmailValidity(String email)
     +loginSuccess(FirebaseUser user)
 }
-class DoctorAppointments{
-    Button btnDatePicker, buttonSubmit, btnLogOut;
-    EditText name, treatment;
-    -int currentYear, currentMonth, currentDay, currentHour, currentMinute;
-    -int Year1, Month1, Day1;
-    -Date date;
+class ActivityDoctorAppointments{
+    Button btnDatePicker, buttonSubmit, btnLogOut
+    EditText name, treatment
+    -int currentYear, currentMonth, currentDay, currentHour, currentMinute
+    -int Year1, Month1, Day1
+    -Date date
     -setupDialog()
     -setTime()
 }
 class PtFreeAppointmentAdapter{
- -Context context;
+ -Context context
  -setupDialog(Appointment appointment, String id)
  -performAddAction(Appointment appointment,String id)
 }
 class PtCalendarAdapter{
--Context context;
+-Context context
 -setupDialog(Appointment appointment, String id)
  -performDeleteAction(Appointment appointment,String id)
 }
@@ -86,17 +86,17 @@ class PtCalendarAdapter{
 class FBUserHelper{
     -{static}String TAG
     +{static}FirebaseFirestore DataBase
-    -{static}FBUserHelper.FBReply fbReply;
+    -{static}FBUserHelper.FBReply fbReply
     -{static}FirebaseUser currentUser
     -{static}CollectionReference collectionRef
     -{static}CollectionReference collectionRefAppointment
     +add(User user)
     +update(String id, User user)
 }
-interface FBUserHelper:FBReply {
-    getAllSuccess(ArrayList<User> users);
-    getOneSuccess(User user);
-    addUserSuccess(String id);
+interface FBUserHelper_FBReply {
+    getAllSuccess(ArrayList<User> users)
+    getOneSuccess(User user)
+    addUserSuccess(String id)
 }
 class FBAuthHelper{
     + {static} FirebaseAuth mAuth
@@ -121,9 +121,9 @@ interface AddAppointmentCallback {
         void onAppointmentAdded(String appointmentId)
         void onAppointmentError(Exception e)
 }
-interface FBAuthHelper:FBReply{
-        + void createUserSuccess(FirebaseUser user);
-        + void loginSuccess(FirebaseUser user);
+interface FBAuthHelper_FBReply{
+        + void createUserSuccess(FirebaseUser user)
+        + void loginSuccess(FirebaseUser user)
 }
 class AppointmentHelper {
 + {static} void getUserAppointments(AppointmentsCallback callback)
@@ -151,5 +151,18 @@ PatientActivity --> pt_CalendarFr :manages
 PatientActivity --> pt_Appoints_fr :manages
 PatientActivity --> pt_home_fr :manages
 PatientActivity --> pt_newAppointment_fr :manages
-
+AppointmentHelper --* AppointmentsCallback
+AppointmentHelper --* RemoveAppointmentsCallback
+AppointmentHelper --* AddAppointmentCallback
+FBAuthHelper --* FBAuthHelper_FBReply
+FBUserHelper --* FBUserHelper_FBReply
+RegisterActivity --> FBAuthHelper: uses
+LoginActivity --> FBUserHelper: uses
+PtCalendarAdapter --> AppointmentHelper: uses
+PtFreeAppointmentAdapter --> AppointmentHelper: uses
+AppointmentHelper --> Appointment: manages
+ActivityDoctorAppointments --> AppointmentHelper: uses
+FBUserHelper --> User: uses
+FBAuthHelper --> User: uses
+AppointmentHelper --> NotificationWorker: sets up
 @enduml

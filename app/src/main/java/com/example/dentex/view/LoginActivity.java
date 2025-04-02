@@ -13,7 +13,6 @@ import com.example.dentex.utils.FBAuthHelper;
 import com.example.dentex.utils.FBUserHelper;
 import com.example.dentex.model.User;
 import com.example.dentex.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBR
         if (fbAuthHelper.isLoggedIn()) {
             FBUserHelper fbUserHelper = new FBUserHelper(this);
             if(FBAuthHelper.getCurrentUser().getEmail().equals("manager123@gmail.com"))
-                startActivity(new Intent(this, DoctorAppointments.class));
+                startActivity(new Intent(this, ActivityDoctorAppointments.class));
             else
                 startActivity(new Intent(this, PatientActivity.class));
         }
@@ -95,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBR
     @Override
     public void loginSuccess(FirebaseUser user) {
         if(user.getEmail().equals("manager123@gmail.com"))
-            startActivity(new Intent(this, DoctorAppointments.class));
+            startActivity(new Intent(this, ActivityDoctorAppointments.class));
         else
             startActivity(new Intent(this, PatientActivity.class));
     }

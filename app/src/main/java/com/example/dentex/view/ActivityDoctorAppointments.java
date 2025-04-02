@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class DoctorAppointments extends AppCompatActivity implements View.OnClickListener{
+public class ActivityDoctorAppointments extends AppCompatActivity implements View.OnClickListener{
 
     Button btnDatePicker, buttonSubmit, btnLogOut;
     EditText name, treatment;
@@ -87,7 +87,7 @@ public class DoctorAppointments extends AppCompatActivity implements View.OnClic
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
-                                Toast.makeText(DoctorAppointments.this, "התור נוסף בהצלחה", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityDoctorAppointments.this, "התור נוסף בהצלחה", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
