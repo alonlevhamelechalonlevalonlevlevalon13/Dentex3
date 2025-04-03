@@ -33,7 +33,7 @@ class pt_Appoints_fr {
 class SplashActivity {
     +{static}SPLASH_TIME_OUT
     + getUriFromRawFile(Context context,int rawResourceId)
-    + {static}loading()
+    + loading()
 }
 class RegisterActivity{
 -FirebaseAuth mAuth
@@ -162,8 +162,8 @@ PtCalendarAdapter --> AppointmentHelper: uses
 PtFreeAppointmentAdapter --> AppointmentHelper: uses
 AppointmentHelper --> Appointment: manages
 ActivityDoctorAppointments --> AppointmentHelper: uses
-FBUserHelper --> User: uses
-FBAuthHelper --> User: uses
+FBUserHelper --> User: manages
+FBAuthHelper --> User: creates
 AppointmentHelper --> NotificationWorker: sets up
 pt_CalendarFr --> PtCalendarAdapter: uses
 pt_Appoints_fr --> PtFreeAppointmentAdapter: uses

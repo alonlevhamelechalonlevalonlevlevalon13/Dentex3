@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             },SPLASH_TIME_OUT);
         }
-        public static Uri getUriFromRawFile(Context context,@RawRes int rawResourceId) {
+        public Uri getUriFromRawFile(Context context,@RawRes int rawResourceId) {
             return new Uri.Builder()
                     .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
                     .authority(context.getPackageName())
