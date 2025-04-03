@@ -40,19 +40,18 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
 
    private void setupDialog(Appointment appointment, String id) {
        new AlertDialog.Builder(context)
-               .setTitle("האם אתה בטוח?")
-               .setMessage("אתה בטוח שאתה רוצה לקבוע את התור הזה?")
-               .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+               .setTitle("are you sure?")
+               .setMessage("are you sure you want to book this appointment?")
+               .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {
                        // Handle "Yes" action
                        performAddAction(appointment,id);
                    }
                })
-               .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+               .setNegativeButton("np", new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {
-                       Toast.makeText(context, "הוספת התור התבטלה", Toast.LENGTH_SHORT).show();
                        dialog.dismiss();
                    }
                })
@@ -72,7 +71,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
                        DataBase.collection("openappointments")
                                .document(id)
                                .delete();
-                       Toast.makeText(context, "התור נקבע בהצלחה", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(context, "appointment booked successfully", Toast.LENGTH_SHORT).show();
                    }
 
                    @Override
@@ -97,7 +96,7 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
         holder.Date.setText(dateFormat.format(appointment.getDate()));
         holder.TreatmentType.setText(appointment.getTreatmentType());
         String id = this.getSnapshots().getSnapshot(position).getId();
-        holder.button.setText("קבע תור");
+        holder.button.setText("book appointment");
         holder.button.setOnClickListener(v -> {
             setupDialog(appointment,id);
         });

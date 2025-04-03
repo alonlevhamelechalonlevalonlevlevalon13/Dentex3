@@ -99,7 +99,7 @@
                 android:layout_gravity="left"
                 android:layout_marginLeft="5dp"
                 android:backgroundTint="#123564"
-                android:text="בטל תור"
+                android:text="cancel appointment"
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>

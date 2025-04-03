@@ -3,6 +3,8 @@ package com.example.dentex.view;
 import static com.example.dentex.utils.FBAuthHelper.mAuth;
 import static com.example.dentex.utils.FBUserHelper.DataBase;
 
+import static java.security.AccessController.getContext;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -80,14 +82,14 @@ public class ActivityDoctorAppointments extends AppCompatActivity implements Vie
         }
         if (v == buttonSubmit){
             if (date==null || name==null || treatment==null)
-                Toast.makeText(this, "בבקשה מלא/י את כל השדות", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "please fill in every detail", Toast.LENGTH_SHORT).show();
             else {
                 DataBase.collection("openappointments").
                         add(new Appointment(date, name.getText().toString(), treatment.getText().toString()))
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
-                                Toast.makeText(ActivityDoctorAppointments.this, "התור נוסף בהצלחה", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityDoctorAppointments.this, "appointment added to database", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -98,17 +100,16 @@ public class ActivityDoctorAppointments extends AppCompatActivity implements Vie
     }
     private void setupDialog() {
         new AlertDialog.Builder(this)
-                .setTitle("האם אתה בטוח?")
-                .setMessage("אתה בטוח שאתה רוצה להתנתק?")
-                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                .setTitle("are you sure?")
+                .setMessage("are you sure you want to log out?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Handle "Yes" action
                         mAuth.signOut();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        startActivity(new Intent(ActivityDoctorAppointments.this, LoginActivity.class));
                     }
                 })
-                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                .setNegativeButton("no", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

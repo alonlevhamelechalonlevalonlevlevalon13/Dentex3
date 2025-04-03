@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="כתובת אימייל"
+        android:hint="email address:"
         android:textColor="#8DEEFd"
         android:textColorHint="#8DEEFD" />
 
@@ -33,7 +33,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:gravity="right"
-        android:hint="סיסמה"
+        android:hint="password:"
         android:inputType="textPassword"
         android:textColor="#8deefd"
         android:textColorHint="#8DEEFD" />
@@ -45,7 +45,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:gravity="right"
-        android:hint="אשר סיסמה"
+        android:hint="confirm password:"
         android:inputType="textPassword"
         android:textColor="#8deefd"
         android:textColorHint="#8DEEFD" />
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="right"
-        android:hint="שם פרטי"
+        android:hint="first name:"
         android:textColor="#8deefd"
         android:textColorHint="#8DEEFD" />
 
@@ -64,7 +64,7 @@
         android:id="@+id/tvWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="*שימו ❤ שאין אפשרות לשנות את הנתונים האלה בעתיד"
+        android:text="*there is no option to change these attributes late on"
         android:textColor="#8DEEFD" />
 
     <Button
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:backgroundTint="#8DEEFD"
-        android:text="צור משתמש כמטופל"
+        android:text="create user"
         android:textColor="#123564"
         android:textColorLink="#8DEEFD"
         android:textSize="24sp"

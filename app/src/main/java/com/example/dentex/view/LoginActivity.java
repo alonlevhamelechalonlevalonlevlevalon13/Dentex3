@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBR
         setContentView(R.layout.activity_login);
         fbAuthHelper = new FBAuthHelper(this, this);
         if (fbAuthHelper.isLoggedIn()) {
-            FBUserHelper fbUserHelper = new FBUserHelper(this);
             if(FBAuthHelper.getCurrentUser().getEmail().equals("manager123@gmail.com"))
                 startActivity(new Intent(this, ActivityDoctorAppointments.class));
             else
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements FBAuthHelper.FBR
                 if (checkEmailValidity(EtEmail.getText().toString()) && checkPasswordValidity(EtPassword.getText().toString())) {
                     fbAuthHelper.login(EtEmail.getText().toString(), EtPassword.getText().toString());
                 } else {
-                    Toast.makeText(LoginActivity.this, "שגיאת התחברות", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "error logging in", Toast.LENGTH_LONG).show();
                 }
             }
         });

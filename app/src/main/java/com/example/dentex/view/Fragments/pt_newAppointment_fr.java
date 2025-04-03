@@ -78,33 +78,33 @@ public class pt_newAppointment_fr extends Fragment {
 
 
                 popupMenu.getMenuInflater().inflate(R.menu.select_treatment, popupMenu.getMenu());
-                MenuItem bdika = popupMenu.getMenu().findItem(R.id.option1);
-                MenuItem akira = popupMenu.getMenu().findItem(R.id.option2);
-                MenuItem stima = popupMenu.getMenu().findItem(R.id.option3);
-                MenuItem nikooy = popupMenu.getMenu().findItem(R.id.option4);
-                MenuItem tipool_shoresh = popupMenu.getMenu().findItem(R.id.option5);
-                bdika.setEnabled(false);
-                akira.setEnabled(false);
-                stima.setEnabled(false);
-                nikooy.setEnabled(false);
-                tipool_shoresh.setEnabled(false);
+                MenuItem checkup = popupMenu.getMenu().findItem(R.id.option1);
+                MenuItem uprooting = popupMenu.getMenu().findItem(R.id.option2);
+                MenuItem filling = popupMenu.getMenu().findItem(R.id.option3);
+                MenuItem cleaning = popupMenu.getMenu().findItem(R.id.option4);
+                MenuItem root_canal = popupMenu.getMenu().findItem(R.id.option5);
+                checkup.setEnabled(false);
+                uprooting.setEnabled(false);
+                filling.setEnabled(false);
+                cleaning.setEnabled(false);
+                root_canal.setEnabled(false);
                 invalidateOptionsMenu(getActivity());
                 if (drName == null) {
-                    bdika.setEnabled(true);
-                    akira.setEnabled(true);
-                    stima.setEnabled(true);
-                    nikooy.setEnabled(true);
-                    tipool_shoresh.setEnabled(true);
+                    checkup.setEnabled(true);
+                    uprooting.setEnabled(true);
+                    filling.setEnabled(true);
+                    cleaning.setEnabled(true);
+                    root_canal.setEnabled(true);
                 }
-                else if (drName.equals("דור איינס") || drName.equals("סיוון שפיר")) {
-                    bdika.setEnabled(true);
-                    stima.setEnabled(true);
-                } else if (drName.equals("נופר לוי")) {
-                    nikooy.setEnabled(true);
-                } else if (drName.equals("גיא נבון")) {
-                    tipool_shoresh.setEnabled(true);
-                } else if (drName.equals("גל הרמן")) {
-                    akira.setEnabled(true);
+                else if (drName.equals("dor aines") || drName.equals("sivan shafir")) {
+                    checkup.setEnabled(true);
+                    filling.setEnabled(true);
+                } else if (drName.equals("nofar levy")) {
+                    cleaning.setEnabled(true);
+                } else if (drName.equals("guy navon")) {
+                    root_canal.setEnabled(true);
+                } else if (drName.equals("gal herman")) {
+                    uprooting.setEnabled(true);
                 }
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -153,17 +153,17 @@ public class pt_newAppointment_fr extends Fragment {
             sivan.setEnabled(true);
             nofar.setEnabled(true);
         }
-        if (treatmentType.equals("בדיקה")) {
+        if (treatmentType.equals("checkup")) {
             dor.setEnabled(true);
             sivan.setEnabled(true);
-        } else if (treatmentType.equals("עקירה")) {
+        } else if (treatmentType.equals("uprooting")) {
             gal.setEnabled(true);
-        } else if (treatmentType.equals("סתימה")) {
+        } else if (treatmentType.equals("filling")) {
             dor.setEnabled(true);
             sivan.setEnabled(true);
-        } else if (treatmentType.equals("ניקוי")) {
+        } else if (treatmentType.equals("cleaning")) {
             nofar.setEnabled(true);
-        } else if (treatmentType.equals("טיפול שורש")) {
+        } else if (treatmentType.equals("root canal")) {
             guy.setEnabled(true);
         }
         // Set item click listener

@@ -38,19 +38,18 @@ public class PtCalendarAdapter extends FirestoreRecyclerAdapter<Appointment, PtC
 
     private void setupDialog(Appointment appointment, String id) {
         new AlertDialog.Builder(context)
-                .setTitle("האם אתה בטוח?")
-                .setMessage("אתה בטוח שאתה רוצה לבטל את התור הזה?")
-                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                .setTitle("are you sure?")
+                .setMessage("are you sure you want to cancel this appointment?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Handle "Yes" action
                         performDeleteAction(appointment, id);
                     }
                 })
-                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                .setNegativeButton("no", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context, "הוספת התור התבטלה", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })
@@ -66,7 +65,7 @@ public class PtCalendarAdapter extends FirestoreRecyclerAdapter<Appointment, PtC
                 AppointmentHelper.removeAppointment(id, new AppointmentHelper.RemoveAppointmentsCallback() {
                     @Override
                     public void onAppointmentsRemoved() {
-                        Toast.makeText(context, "התור בוטל בהצלחה", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "appointment successfully canceled", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

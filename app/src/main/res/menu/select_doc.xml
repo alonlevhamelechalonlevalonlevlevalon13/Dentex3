@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/option1"
-        android:title="דור איינס" />
+        android:title="dor aines" />
     <item
         android:id="@+id/option2"
-        android:title="גיא נבון" />
+        android:title="guy navon" />
     <item
         android:id="@+id/option3"
-        android:title="גל הרמן" />
+        android:title="gal herman" />
     <item
         android:id="@+id/option4"
-        android:title="סיוון שפיר" />
+        android:title="sivan shafir" />
     <item
         android:id="@+id/option5"
-        android:title="נופר לוי" />
+        android:title="nofar levy" />
 </menu>

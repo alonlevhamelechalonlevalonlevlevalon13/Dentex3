@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/option1"
-        android:title="בדיקה" />
+        android:title="checkup" />
     <item
         android:id="@+id/option2"
-        android:title="עקירה" />
+        android:title="uprooting" />
     <item
         android:id="@+id/option3"
-        android:title="סתימה" />
+        android:title="filling" />
     <item
         android:id="@+id/option4"
-        android:title="ניקוי" />
+        android:title="cleaning" />
     <item
         android:id="@+id/option5"
-        android:title="טיפול שורש" />
+        android:title="root canal" />
 </menu>

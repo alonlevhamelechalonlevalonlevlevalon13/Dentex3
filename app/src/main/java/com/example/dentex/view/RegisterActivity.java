@@ -29,8 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
     private EditText EtConfirm;
     private EditText EtName;
     private Button BtnSignUp;
-    private FBAuthHelper fbAuthHelper;///
-    private FBUserHelper fsUserHelper;
+    private FBAuthHelper fbAuthHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
                 if( checkEmailValidity(EtEmail.getText().toString()) && checkPasswordValidity(EtPassword.getText().toString(), EtConfirm.getText().toString()) && EtName.getText().toString()!=null){
                     fbAuthHelper.createUser(EtEmail.getText().toString(), EtPassword.getText().toString());
                 }
-                else Toast.makeText(RegisterActivity.this, "שגיאה ביצירת המשתמש", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(RegisterActivity.this, "error creating user", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -90,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity implements FBAuthHelper.
         startActivity(new Intent(this, PatientActivity.class));
     }
     public void createUserFail(){
-        Toast.makeText(RegisterActivity.this,"יצירת המשתמש נכשלה", Toast.LENGTH_LONG).show();
+        Toast.makeText(RegisterActivity.this,"error creating user", Toast.LENGTH_LONG).show();
     }
 
     @Override

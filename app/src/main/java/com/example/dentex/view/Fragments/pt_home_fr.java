@@ -63,16 +63,16 @@ public class pt_home_fr extends Fragment {
     }
     private void setupDialog() {
         new AlertDialog.Builder(getContext())
-                .setTitle("האם אתה בטוח?")
-                .setMessage("אתה בטוח שאתה רוצה להתנתק?")
-                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                .setTitle("are you sure?")
+                .setMessage("are you sure you want to log out?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mAuth.signOut();
                         startActivity(new Intent(getContext(), LoginActivity.class));
                     }
                 })
-                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                .setNegativeButton("no", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -76,31 +76,16 @@ public class AppointmentHelper {
     }
 
     public static void scheduleNotification(Context context, Appointment appointment) {
-        // Get the time when the notification should be triggered (Appointment Date)
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(appointment.getDate());
-
-        // Calculate the delay in milliseconds from now until the appointment time
         long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
-
-        // If the appointment time is in the past, we do nothing
         if (delay <= 0) {
             return;
         }
-
-        // Create input data for the Worker (Appointment data)
-        Data inputData = new Data.Builder()
-                .putString("title", "you have a "+appointment.getTreatmentType()+" with "+appointment.getDrname())
-                .putString("message", "Reminder")
-                .build();
-
-        // Create the WorkRequest
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS) // Delay the execution until the appointment time
-                .setInputData(inputData)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
                 .build();
         appointment.setAlarm(workRequest.getId());
-        // Enqueue the work request with WorkManager
         WorkManager.getInstance(context).enqueue(workRequest);
     }
 

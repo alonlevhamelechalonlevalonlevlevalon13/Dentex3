@@ -34,17 +34,17 @@ TextView titleText;
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getTitle().toString()) {
-                    case "כל התורים":
+                    case "calendar":
                         replaceFragment(new pt_CalendarFr());
-                        titleText.setText("כל התורים");
+                        titleText.setText("personal calendar");
                         return true;
-                    case "תור חדש":
-                        titleText.setText("בחר סוג טיפול ורופא");
+                    case "new appointment":
+                        titleText.setText("find appointments");
                         replaceFragment(new pt_newAppointment_fr(PatientActivity.this));
                         return true;
-                    case "דף הבית":
+                    case "home page":
                         replaceFragment(new pt_home_fr());
-                        titleText.setText("דף הבית");
+                        titleText.setText("home page");
                         return true;
                 }
                 return false;

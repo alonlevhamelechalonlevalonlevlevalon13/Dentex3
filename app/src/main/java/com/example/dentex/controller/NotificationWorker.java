@@ -41,8 +41,8 @@ public class NotificationWorker extends Worker {
 
         // Create the notification
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), "REMINDER_CHANNEL")
-                .setContentTitle("תזכורת")
-                .setContentText("מזכירים שיש לך תור למרפאה שלנו בעוד 24 שעות!")
+                .setContentTitle("reminder")
+                .setContentText("this is a reminder that you have an appointment 24 hours from now")
                 .setSmallIcon(R.drawable.applogo)
                 .setAutoCancel(true)
                 .build();
