@@ -165,4 +165,7 @@ ActivityDoctorAppointments --> AppointmentHelper: uses
 FBUserHelper --> User: uses
 FBAuthHelper --> User: uses
 AppointmentHelper --> NotificationWorker: sets up
+pt_CalendarFr --> PtCalendarAdapter: uses
+pt_Appoints_fr --> PtFreeAppointmentAdapter: uses
+AppointmentHelper --> User: uses
 @enduml
