@@ -1,5 +1,7 @@
 package com.example.dentex.utils;
 
+import static com.example.dentex.utils.FBUserHelper.collectionRefAppointment;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -85,13 +87,13 @@ public class AppointmentHelper {
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class)
                 .setInitialDelay(delay, TimeUnit.MILLISECONDS)
                 .build();
-        appointment.setAlarm(workRequest.getId());
+        appointment.setAlarmUUID(workRequest.getId());
         WorkManager.getInstance(context).enqueue(workRequest);
     }
 
     public static void stopAlarm(Context context, Appointment appointment){//ביטול ההתראה - חלק מביטול התור
-        if (appointment.getAlarm()!= null)
-            WorkManager.getInstance(context).cancelWorkById(appointment.getAlarm());
+        if (appointment.getAlarmUUID() != null)
+            WorkManager.getInstance(context).cancelWorkById(appointment.getAlarmUUID());
     }
 
     public static void addAppointmentToUser( Appointment appointment, AddAppointmentCallback callback) { // הוספת תור למערך של המשתמש המחובר
@@ -103,7 +105,7 @@ public class AppointmentHelper {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             // Add a new document with a generated ID
-            db.collection("users").document(userId).collection("appointments")
+            collectionRefAppointment
                     .add(appointment)
                     .addOnSuccessListener(documentReference -> {
                         // Appointment added successfully

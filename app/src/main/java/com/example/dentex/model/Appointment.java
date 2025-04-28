@@ -1,13 +1,15 @@
 package com.example.dentex.model;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.util.Date;
 import java.util.UUID;
 
-public class Appointment{
+public class Appointment {
     public Date date;
     public String drname;
     public String treatmentType;
-    public UUID alarm;
+    public String alarm;
 
     public Appointment(Date date, String Drname, String treatmentType) {
         this.date = date;
@@ -15,11 +17,19 @@ public class Appointment{
         this.treatmentType = treatmentType;
     }
 
-    public UUID getAlarm() {
-        return alarm;
+    @Exclude
+    public UUID getAlarmUUID() {
+        if(alarm != null)
+            return UUID.fromString(alarm);
+        else
+            return null;
     }
 
-    public void setAlarm(UUID alarm) {
+    public String getAlarm() {
+        return this.alarm;
+    }
+
+    public void setAlarm(String alarm) {
         this.alarm = alarm;
     }
 
@@ -39,7 +49,8 @@ public class Appointment{
         this.treatmentType = treatmentType;
     }
 
-    public Appointment(){}
+    public Appointment(){
+    }
 
     public Date getDate() {
         return date;
@@ -49,4 +60,11 @@ public class Appointment{
         this.date = date;
     }
 
+    @Exclude
+    public void setAlarmUUID(UUID id) {
+        if (id ==null)
+            this.alarm = null;
+        else
+            this.alarm = id.toString();
+    }
 }

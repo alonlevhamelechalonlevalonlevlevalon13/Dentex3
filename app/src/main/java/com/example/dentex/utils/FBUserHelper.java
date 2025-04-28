@@ -15,7 +15,7 @@ public class FBUserHelper {
     private static FBUserHelper.FBReply fbReply;
     private static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private static CollectionReference collectionRef = DataBase.collection("users");
-    private static CollectionReference collectionRefAppointment = DataBase.collection("users").document(currentUser.getUid()).collection("appointments");
+    protected static CollectionReference collectionRefAppointment = DataBase.collection("users").document(currentUser.getUid()).collection("appointments");
 
     public interface FBReply {
         void getAllSuccess(ArrayList<User> users);
@@ -28,9 +28,9 @@ public class FBUserHelper {
     }
 
     public void add(User user) {
-        collectionRef.add(user).addOnSuccessListener(documentReference -> {
-            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-            this.fbReply.addUserSuccess(documentReference.getId());
+        collectionRef.document(currentUser.getUid()).set(user).addOnSuccessListener(documentReference -> {
+            Log.d(TAG, "DocumentSnapshot added with ID: " + currentUser.getUid());
+            this.fbReply.addUserSuccess(currentUser.getUid());
         }).addOnFailureListener(e -> {
             Log.w(TAG, "Error adding document", e);
             });

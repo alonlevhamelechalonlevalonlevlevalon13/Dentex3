@@ -64,10 +64,10 @@ public class PtFreeAppointmentAdapter extends FirestoreRecyclerAdapter<Appointme
        AppointmentHelper.getUserAppointments(new AppointmentHelper.AppointmentsCallback() {
            @Override
            public List<Appointment> onAppointmentsLoaded(List<Appointment> appointments) {
+               AppointmentHelper.scheduleNotification(context,appointment);
                AppointmentHelper.addAppointmentToUser(appointment, new AppointmentHelper.AddAppointmentCallback() {
                    @Override
                    public void onAppointmentAdded(String appointmentId) {
-                       AppointmentHelper.scheduleNotification(context, appointment);
                        DataBase.collection("openappointments")
                                .document(id)
                                .delete();
